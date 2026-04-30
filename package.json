@@ -1,0 +1,34 @@
+{
+  "name": "qa-utils-automation-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx codeceptjs run --steps",
+    "test:headless": "HEADLESS=true npx codeceptjs run --steps",
+    "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2",
+    "allure:generate": "allure generate output/allure-results --clean -o output/allure-report",
+    "allure:open": "allure open output/allure-report",
+    "allure:report": "npm run allure:generate && npm run allure:open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thienng-it/qa-utils-automation-tests.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thienng-it/qa-utils-automation-tests/issues"
+  },
+  "homepage": "https://github.com/thienng-it/qa-utils-automation-tests#readme",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "allure-commandline": "^2.38.1",
+    "codeceptjs": "^3.1.1",
+    "playwright": "^1.59.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}
