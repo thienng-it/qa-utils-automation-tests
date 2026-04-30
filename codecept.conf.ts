@@ -20,8 +20,6 @@ export const config: CodeceptJS.MainConfig = {
   include: {
     I: './steps_file',
     homePage: './pages/HomePage',
-    uuidPage: './pages/UuidPage',
-    base64Page: './pages/Base64Page',
   },
   plugins: {
     allure: {
