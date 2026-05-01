@@ -38,8 +38,17 @@ jobs:
               run: npx playwright install chromium --with-deps
 
             - name: Run tests (headless)
-              run: HEADLESS=true npx codeceptjs run --steps
+              run: HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
               continue-on-error: true
+
+            - name: Extract test stats
+              run: |
+                PASSED=$(grep -oE '[0-9]+ passed' output/test-output.log | head -1 | grep -oE '[0-9]+' || echo "0")
+                FAILED=$(grep -oE '[0-9]+ failed' output/test-output.log | head -1 | grep -oE '[0-9]+' || echo "0")
+                SKIPPED=$(grep -oE '[0-9]+ skipped' output/test-output.log | head -1 | grep -oE '[0-9]+' || echo "0")
+                TOTAL=$((PASSED + FAILED + SKIPPED))
+                echo "{\"passed\": $PASSED, \"failed\": $FAILED, \"skipped\": $SKIPPED, \"total\": $TOTAL}" > output/stats.json
+                cat output/stats.json
 
             - name: Get today's date
               id: date
@@ -65,42 +74,91 @@ jobs:
                 else
                   echo "No report found — tests may have crashed before reporter ran"
                 fi
+                cp output/stats.json gh-pages-content/reports/${{ steps.date.outputs.date }}/stats.json
+
 
             - name: Generate root index.html
               run: |
-                cat > gh-pages-content/index.html << 'EOF'
+                # Compute totals across all days
+                TOTAL_PASSED=0
+                TOTAL_FAILED=0
+                TOTAL_SKIPPED=0
+                for stats_file in gh-pages-content/reports/*/stats.json; do
+                  if [ -f "$stats_file" ]; then
+                    P=$(grep -oE '"passed": [0-9]+' "$stats_file" | grep -oE '[0-9]+')
+                    F=$(grep -oE '"failed": [0-9]+' "$stats_file" | grep -oE '[0-9]+')
+                    S=$(grep -oE '"skipped": [0-9]+' "$stats_file" | grep -oE '[0-9]+')
+                    TOTAL_PASSED=$((TOTAL_PASSED + P))
+                    TOTAL_FAILED=$((TOTAL_FAILED + F))
+                    TOTAL_SKIPPED=$((TOTAL_SKIPPED + S))
+                  fi
+                done
+                TOTAL_TESTS=$((TOTAL_PASSED + TOTAL_FAILED + TOTAL_SKIPPED))
+                if [ $TOTAL_TESTS -gt 0 ]; then
+                  PASS_RATE=$((TOTAL_PASSED * 100 / TOTAL_TESTS))
+                else
+                  PASS_RATE=0
+                fi
+
+                cat > gh-pages-content/index.html << EOF
                 <!DOCTYPE html>
                 <html lang="en">
                 <head>
                   <meta charset="UTF-8">
-                  <title>QA Utils - Test Reports</title>
+                  <title>QA Utils - Test Reports Dashboard</title>
                   <style>
-                    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background: #f9f9f9; }
-                    h1 { color: #1a1a2e; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
-                    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+                    * { box-sizing: border-box; }
+                    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 1000px; margin: 40px auto; padding: 0 20px; background: #f4f6f9; color: #1a1a2e; }
+                    h1 { border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+                    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 24px 0; }
+                    .card { background: white; border-radius: 10px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+                    .card .number { font-size: 2.2rem; font-weight: 700; }
+                    .card .label { font-size: 0.85rem; color: #666; margin-top: 4px; }
+                    .card.passed .number { color: #16a34a; }
+                    .card.failed .number { color: #dc2626; }
+                    .card.skipped .number { color: #ca8a04; }
+                    .card.total .number { color: #1a1a2e; }
+                    .card.rate .number { color: #0969da; }
+                    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 24px; }
                     th { background: #1a1a2e; color: white; padding: 14px 16px; text-align: left; }
                     td { padding: 12px 16px; border-bottom: 1px solid #eee; }
                     tr:last-child td { border-bottom: none; }
                     tr:hover td { background: #f0f4ff; }
                     a { color: #0969da; text-decoration: none; font-weight: 500; }
-                    a:hover { text-decoration: underline; }
                     .badge { background: #0969da; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; }
+                    .pass { color: #16a34a; font-weight: 600; }
+                    .fail { color: #dc2626; font-weight: 600; }
+                    .skip { color: #ca8a04; font-weight: 600; }
                   </style>
                 </head>
                 <body>
-                  <h1>🧪 QA Utils — Daily Test Reports</h1>
+                  <h1>QA Utils — Test Reports Dashboard</h1>
+                  <div class="cards">
+                    <div class="card total"><div class="number">$TOTAL_TESTS</div><div class="label">Total Tests</div></div>
+                    <div class="card passed"><div class="number">$TOTAL_PASSED</div><div class="label">Passed</div></div>
+                    <div class="card failed"><div class="number">$TOTAL_FAILED</div><div class="label">Failed</div></div>
+                    <div class="card skipped"><div class="number">$TOTAL_SKIPPED</div><div class="label">Skipped</div></div>
+                    <div class="card rate"><div class="number">${PASS_RATE}%</div><div class="label">Pass Rate</div></div>
+                  </div>
                   <table>
-                    <thead><tr><th>#</th><th>Date</th><th>Report</th></tr></thead>
+                    <thead><tr><th>#</th><th>Date</th><th>Passed</th><th>Failed</th><th>Skipped</th><th>Report</th></tr></thead>
                     <tbody>
                 EOF
-      
+
                 count=1
-                for dir in $(ls -dr gh-pages-content/reports/*/); do
-                  date=$(basename "$dir")
-                  echo "      <tr><td>$count</td><td>$date</td><td><a href=\"reports/$date/index.html\"><span class=\"badge\">View Report</span></a></td></tr>" >> gh-pages-content/index.html
-                  count=$((count + 1))
+                for dir in \$(ls -dr gh-pages-content/reports/*/); do
+                  d=\$(basename "\$dir")
+                  if [ -f "\$dir/stats.json" ]; then
+                    P=\$(grep -oE '"passed": [0-9]+' "\$dir/stats.json" | grep -oE '[0-9]+')
+                    F=\$(grep -oE '"failed": [0-9]+' "\$dir/stats.json" | grep -oE '[0-9]+')
+                    S=\$(grep -oE '"skipped": [0-9]+' "\$dir/stats.json" | grep -oE '[0-9]+')
+                  else
+                    P="-"; F="-"; S="-"
+                  fi
+                  echo "      <tr><td>\$count</td><td>\$d</td><td class=\"pass\">\$P</td><td class=\"fail\">\$F</td><td class=\"skip\">\$S</td><td><a href=\"reports/\$d/index.html\"><span class=\"badge\">View</span></a></td></tr>" >> gh-pages-content/index.html
+                  count=\$((count + 1))
                 done
-      
+
                 cat >> gh-pages-content/index.html << 'EOF'
                     </tbody>
                   </table>
