@@ -146,17 +146,17 @@ jobs:
                 EOF
 
                 count=1
-                for dir in \$(ls -dr gh-pages-content/reports/*/); do
-                  d=\$(basename "\$dir")
-                  if [ -f "\$dir/stats.json" ]; then
-                    P=\$(grep -oE '"passed": [0-9]+' "\$dir/stats.json" | grep -oE '[0-9]+')
-                    F=\$(grep -oE '"failed": [0-9]+' "\$dir/stats.json" | grep -oE '[0-9]+')
-                    S=\$(grep -oE '"skipped": [0-9]+' "\$dir/stats.json" | grep -oE '[0-9]+')
+                for dir in $(ls -dr gh-pages-content/reports/*/); do
+                  d=$(basename "$dir")
+                  if [ -f "$dir/stats.json" ]; then
+                    P=$(grep -oE '"passed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
+                    F=$(grep -oE '"failed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
+                    S=$(grep -oE '"skipped": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
                   else
                     P="-"; F="-"; S="-"
                   fi
-                  echo "      <tr><td>\$count</td><td>\$d</td><td class=\"pass\">\$P</td><td class=\"fail\">\$F</td><td class=\"skip\">\$S</td><td><a href=\"reports/\$d/index.html\"><span class=\"badge\">View</span></a></td></tr>" >> gh-pages-content/index.html
-                  count=\$((count + 1))
+                  echo "      <tr><td>$count</td><td>$d</td><td class=\"pass\">$P</td><td class=\"fail\">$F</td><td class=\"skip\">$S</td><td><a href=\"reports/$d/index.html\"><span class=\"badge\">View</span></a></td></tr>" >> gh-pages-content/index.html
+                  count=$((count + 1))
                 done
 
                 cat >> gh-pages-content/index.html << 'EOF'
