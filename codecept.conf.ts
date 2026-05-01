@@ -13,9 +13,10 @@ export const config: CodeceptJS.MainConfig = {
     Playwright: {
       browser: 'chromium',
       url: 'https://kobenguyent.github.io/qa-utils/',
-      show: true,
-      waitForNavigation: 'load',
+      show: false,
+      waitForNavigation: "load",
       video: true,
+      timeout: 30000,
     },
   },
   include: {
@@ -25,7 +26,7 @@ export const config: CodeceptJS.MainConfig = {
   plugins: {
     htmlReporter: {
       enabled: true,
-      outputFile: 'output/html-report',
+      output: 'output/html-report',
       reportFileName: 'index.html',
       includeArtifacts: true,
       showSteps: true,

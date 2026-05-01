@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx codeceptjs run --steps --verbose --debug",
+    "test": "npx codeceptjs run --steps",
     "test:headless": "HEADLESS=true npx codeceptjs run --steps",
     "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2"
   },

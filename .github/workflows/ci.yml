@@ -58,7 +58,13 @@ jobs:
             - name: Copy today's report into dated folder
               run: |
                 mkdir -p gh-pages-content/reports/${{ steps.date.outputs.date }}
-                cp -r output/html-report/* gh-pages-content/reports/${{ steps.date.outputs.date }}/
+                if [ -d output/html-report ]; then
+                  cp -r output/html-report/. gh-pages-content/reports/${{ steps.date.outputs.date }}/
+                elif [ -f output/report.html ]; then
+                  cp output/report.html gh-pages-content/reports/${{ steps.date.outputs.date }}/index.html
+                else
+                  echo "No report found — tests may have crashed before reporter ran"
+                fi
 
             - name: Generate root index.html
               run: |
