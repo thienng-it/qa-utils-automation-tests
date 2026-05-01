@@ -42,3 +42,15 @@ Scenario('Should navigate back to home via home link', ({ I, homePage}) => {
     homePage.clickHomeLink();
     I.seeElement(homePage.selectors.brand);
 }).tag('@regression');
+
+// Scenario 6: Click on "Explore Tools" button
+Scenario('Should click on "Explore Tools" button and navigate to tools page', ({ I, homePage }) => {
+    homePage.clickExploreTools('Explore Tools');
+    homePage.seeExploreToolsTitle('Explore Tools');
+}).tag('@regression');
+
+// Scenario 7: Click on Quote button
+Scenario('Should click on Quote button and see quote text', ({ I, homePage}) => {
+    homePage.clickQuoteButton();
+    homePage.seeHomeCardQuote();
+}).tag('@regression');

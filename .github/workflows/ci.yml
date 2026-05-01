@@ -6,13 +6,11 @@ on:
     pull_request:
         branches: [main]
     schedule:
-        - cron: '0 6 * * *'
+        - cron: '0 23 * * *'
 
 # Grant the workflow permission to write to Github pages
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+    contents: write
 
 # only one Pages deployment at a time
 concurrency:
@@ -43,31 +41,74 @@ jobs:
               run: HEADLESS=true npx codeceptjs run --steps
               continue-on-error: true
 
-            - name: Get previous Allure history
+            - name: Get today's date
+              id: date
+              run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+
+            - name: Checkout existing gh-pages content
               uses: actions/checkout@v4
-              if: always()
               continue-on-error: true
               with:
                 ref: gh-pages
-                path: gh-pages
+                path: gh-pages-content
 
-            - name: Copy previous history
-              if: always()
+            - name: Create gh-pages folder if first run
+              run: mkdir -p gh-pages-content/reports
+
+            - name: Copy today's report into dated folder
               run: |
-                mkdir -p output/allure-results/history
-                cp -r gh-pages/history/* output/allure-results/history/ 2>/dev/null || true
+                mkdir -p gh-pages-content/reports/${{ steps.date.outputs.date }}
+                cp -r output/html-report/* gh-pages-content/reports/${{ steps.date.outputs.date }}/
 
-            - name: Generate Allure report
-              if: always()
-              run: npx allure generate output/allure-results --clean -o output/allure-report
+            - name: Generate root index.html
+              run: |
+                cat > gh-pages-content/index.html << 'EOF'
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                  <meta charset="UTF-8">
+                  <title>QA Utils - Test Reports</title>
+                  <style>
+                    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; background: #f9f9f9; }
+                    h1 { color: #1a1a2e; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+                    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+                    th { background: #1a1a2e; color: white; padding: 14px 16px; text-align: left; }
+                    td { padding: 12px 16px; border-bottom: 1px solid #eee; }
+                    tr:last-child td { border-bottom: none; }
+                    tr:hover td { background: #f0f4ff; }
+                    a { color: #0969da; text-decoration: none; font-weight: 500; }
+                    a:hover { text-decoration: underline; }
+                    .badge { background: #0969da; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; }
+                  </style>
+                </head>
+                <body>
+                  <h1>🧪 QA Utils — Daily Test Reports</h1>
+                  <table>
+                    <thead><tr><th>#</th><th>Date</th><th>Report</th></tr></thead>
+                    <tbody>
+                EOF
+      
+                count=1
+                for dir in $(ls -dr gh-pages-content/reports/*/); do
+                  date=$(basename "$dir")
+                  echo "      <tr><td>$count</td><td>$date</td><td><a href=\"reports/$date/index.html\"><span class=\"badge\">View Report</span></a></td></tr>" >> gh-pages-content/index.html
+                  count=$((count + 1))
+                done
+      
+                cat >> gh-pages-content/index.html << 'EOF'
+                    </tbody>
+                  </table>
+                </body>
+                </html>
+                EOF
 
-            - name: Upload test report as artifact
-              if: always()
-              uses: actions/upload-artifact@v4
+            - name: Deploy to GitHub Pages (gh-pages branch)
+              uses: peaceiris/actions-gh-pages@v4
               with:
-                name: allure-report
-                path: output/allure-report
-                retention-days: 30
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                publish_dir: gh-pages-content
+                user_name: 'github-actions[bot]'
+                user_email: 'github-actions[bot]@users.noreply.github.com'
 
             - name: Upload failure screenshots
               if: failure()
@@ -76,32 +117,3 @@ jobs:
                 name: failure-screenshots
                 path: output/*.png
                 retention-days: 7
-    
-    # Job 2: Deploy report to Github Pages
-    deploy-report:
-        needs: e2e-tests
-        if: always() && github.ref == 'refs/heads/main'
-        runs-on: ubuntu-latest
-
-        environment:
-            name: github-pages
-            url: ${{ steps.deployment.outputs.page_url }}
-
-        steps:
-            - name: Download Allure report artifact
-              uses: actions/download-artifact@v4
-              with:
-                name: allure-report
-                path: allure-report
-
-            - name: Setup GitHub Pages
-              uses: actions/configure-pages@v5
-
-            - name: Upload to GitHub Pages
-              uses: actions/upload-pages-artifact@v3
-              with:
-                path: allure-report
-
-            - name: Deploy to GitHub Pages
-              id: deployment
-              uses: actions/deploy-pages@v4

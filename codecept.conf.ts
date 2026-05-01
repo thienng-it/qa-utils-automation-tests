@@ -15,6 +15,7 @@ export const config: CodeceptJS.MainConfig = {
       url: 'https://kobenguyent.github.io/qa-utils/',
       show: true,
       waitForNavigation: 'load',
+      video: true,
     },
   },
   include: {
@@ -22,13 +23,13 @@ export const config: CodeceptJS.MainConfig = {
     homePage: './pages/HomePage',
   },
   plugins: {
-    allure: {
-      enabled: true,
-      require: '@codeceptjs/allure-legacy',
-      outputDir: 'output/allure-results',
-    },
     htmlReporter: {
-      enabled: true
+      enabled: true,
+      outputFile: 'output/html-report',
+      reportFileName: 'index.html',
+      includeArtifacts: true,
+      showSteps: true,
+      showSkipped: true,
     },
     retryFailedStep: {
       enabled: true,

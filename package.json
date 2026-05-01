@@ -4,12 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx codeceptjs run --steps",
+    "test": "npx codeceptjs run --steps --verbose --debug",
     "test:headless": "HEADLESS=true npx codeceptjs run --steps",
-    "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2",
-    "allure:generate": "allure generate output/allure-results --clean -o output/allure-report",
-    "allure:open": "allure open output/allure-report",
-    "allure:report": "npm run allure:generate && npm run allure:open"
+    "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2"
   },
   "repository": {
     "type": "git",
@@ -24,10 +21,11 @@
   },
   "homepage": "https://github.com/thienng-it/qa-utils-automation-tests#readme",
   "devDependencies": {
-    "@codeceptjs/allure-legacy": "^1.0.2",
     "@types/node": "^25.6.0",
-    "allure-commandline": "^2.38.1",
     "codeceptjs": "^3.7.9",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2",
     "playwright": "^1.59.1",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"

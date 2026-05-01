@@ -3,6 +3,7 @@ export const ROUTES = {
     home: "#/",
     uuid: "#/uuid",
     base64: "#/base64",
+    explore: "#/explore",
 } as const;
 
 // Navigation group names

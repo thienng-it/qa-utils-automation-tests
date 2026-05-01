@@ -10,6 +10,11 @@ class HomePage {
         searchInput: '#navbar-search',
         homeLink: '[aria-label="Go to home page"]',
         themeToggle: '[aria-label^="Theme:"]', // starts-with match (label changes per theme)
+        exploreTools: '[aria-label="Explore tools"]',
+        exploreToolsTitle: '.explore-title',
+        quoteButton: '[aria-label="Get another random quote"]',
+        homeCardQuoteText: '.home-card-quote-text',
+        homeCardQuoteAuthor: '.home-card-quote-author',
     };
 
     // Actions
@@ -40,6 +45,28 @@ class HomePage {
 
     toggleTheme(): void {
         I.click(this.selectors.themeToggle);
+    }
+
+    clickExploreTools(exploreToolsName: string): void {
+        I.click(this.selectors.exploreTools);
+    }
+
+    seeExploreToolsTitle(title: string): void {
+        I.see(title);
+        I.seeElement(this.selectors.exploreToolsTitle);
+    }
+
+    clickQuoteButton(): void {
+        I.click(this.selectors.quoteButton);
+    }
+
+    seeQuoteButtonIsClickable(): void {
+        I.seeElement(this.selectors.quoteButton);
+    }
+
+    seeHomeCardQuote(): void {
+        I.seeElement(this.selectors.homeCardQuoteText);
+        I.seeElement(this.selectors.homeCardQuoteAuthor);
     }
 }
 
