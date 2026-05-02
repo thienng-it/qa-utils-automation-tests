@@ -48,12 +48,14 @@ jobs:
 
             - name: Extract test stats
               run: |
-                PASSED=$(grep -oE '[0-9]+ passed' output/test-output.log | head -1 | grep -oE '[0-9]+' || echo "0")
-                FAILED=$(grep -oE '[0-9]+ failed' output/test-output.log | head -1 | grep -oE '[0-9]+' || echo "0")
-                SKIPPED=$(grep -oE '[0-9]+ skipped' output/test-output.log | head -1 | grep -oE '[0-9]+' || echo "0")
+                sed 's/\x1b\[[0-9;]*m//g' output/test-output.log > output/test-clean.log
+                cat output/test-clean.log | tail -20
+                PASSED=$(grep -oE '[0-9]+ passed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
+                FAILED=$(grep -oE '[0-9]+ failed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
+                SKIPPED=$(grep -oE '[0-9]+ skipped' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
                 TOTAL=$((PASSED + FAILED + SKIPPED))
                 echo "{\"passed\": $PASSED, \"failed\": $FAILED, \"skipped\": $SKIPPED, \"total\": $TOTAL}" > output/stats.json
-                cat output/stats.json
+                echo "Stats: $(cat output/stats.json)"
 
             - name: Get today's date
               id: date
