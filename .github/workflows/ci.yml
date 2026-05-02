@@ -43,7 +43,9 @@ jobs:
                 done
 
             - name: Run tests (headless)
-              run: HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
+              run: |
+                mkdir -p output
+                HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
               continue-on-error: true
 
             - name: Extract test stats
