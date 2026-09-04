@@ -43,7 +43,7 @@ export const config: CodeceptJS.MainConfig = {
         allure: {
             enabled: true,
             require: 'allure-codeceptjs',
-            outputDir: 'output/allure-results',
+            resultsDir: 'allure-results',
         },
         retryFailedStep: {
             enabled: true,

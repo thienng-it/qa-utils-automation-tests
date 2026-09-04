@@ -49,7 +49,7 @@ jobs:
 
       - name: Run E2E Test Battery (Headless)
         run: |
-          mkdir -p output/allure-results
+          mkdir -p allure-results output/allure-results
           HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
         continue-on-error: true
 
@@ -81,7 +81,7 @@ jobs:
 
       - name: Generate Allure Report
         run: |
-          npx allure generate output/allure-results --clean -o output/allure-report || echo "Allure generation skipped"
+          npx allure generate allure-results --clean -o output/allure-report || echo "Allure generation skipped"
 
       - name: Get current date
         id: date
