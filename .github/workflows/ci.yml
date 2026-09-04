@@ -99,6 +99,7 @@ jobs:
           mkdir -p gh-pages-content/reports/${{ steps.date.outputs.date }}/allure
           if [ -d output/allure-report ]; then
             cp -r output/allure-report/. gh-pages-content/reports/${{ steps.date.outputs.date }}/allure/
+            echo '<html><head><meta http-equiv="refresh" content="0; url=allure/index.html"><script>window.location.replace("allure/index.html");</script></head><body><p>Redirecting to <a href="allure/index.html">Allure 3 Test Report</a>...</p></body></html>' > gh-pages-content/reports/${{ steps.date.outputs.date }}/index.html
           fi
           cp output/stats.json gh-pages-content/reports/${{ steps.date.outputs.date }}/stats.json
 

@@ -3,6 +3,7 @@ output/
 allure-results/
 *.temp.mjs
 .codegraph/
+dashboard/manifest.json
 
 # Beads / Dolt files (added by bd init)
 .dolt/
