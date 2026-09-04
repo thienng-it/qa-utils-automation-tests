@@ -11,7 +11,10 @@ Target application under test: **KobeanQAUtils** (`https://kobenguyent.github.io
 4. **Data-Driven Rules**: Never hardcode test data in `tests/`. Always import strongly-typed `DataTable`s from `fixtures/`.
 5. **Page Object Model**: All selectors and page actions belong in `pages/` (inheriting `BasePage` or `BaseComponent`).
 6. **In-Repo Test Management**: Manage and track test plans and test cases under `plans/` using standardized naming (`QA-[TYPE]-[YYYYMMDD]-[SEQ]-[slug].md`) and link them in `ZEPHYR_TRACEABILITY_MATRIX.md`.
-7. **Beads & CodeGraph**: Sync tasks with `bd task` and consult `bd recall` and `npx codegraph` before refactoring.
+7. **Continuous Lifecycle Synchronization**: Strictly follow [.agents/rules/lifecycle-sync-rules.md](file:///Users/josephnguyen/qa-utils-automation-tests/.agents/rules/lifecycle-sync-rules.md).
+   - **Beads (`bd`)**: Ingest tasks with `bd ready`, claim with `bd update --claim`, log decisions with `bd remember`, and close with `bd close`.
+   - **CodeGraph**: Run `npm run codegraph:sync` on any file change in `pages/`, `config/`, or `fixtures/`. Run `npx codegraph impact <symbol>` before refactoring.
+   - **Agents & Skills**: Update `.agents/rules/skill-activation-rules.md` and `codeceptjs-best-practices.md` when new patterns, tools, or POM abstractions are added.
 8. **Situational Skill Engine**: Check `.agents/rules/skill-activation-rules.md` to trigger the appropriate CodeceptJS skill based on context.
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:7510c1e2 -->
@@ -42,9 +45,9 @@ bd close <id>         # Complete work
 
 **MANDATORY WORKFLOW:**
 
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
+1. **File issues for remaining work** - Create issues for anything that needs follow-up (`bd create`)
+2. **Run quality gates & sync** (if code changed) - Run `npm run quality-gate` (`tsc --noEmit`, `npx codegraph sync .`, `bd export -o .beads/issues.jsonl`) and test suites (`npm test` / `npm run test:smoke`)
+3. **Update issue status** - Close finished work (`bd close <id>`), update persistent memories (`bd remember`)
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
