@@ -17,7 +17,7 @@ permissions:
   pages: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -47,98 +47,141 @@ jobs:
       - name: "Quality Gate 1: Type Checking"
         run: npm run typecheck
 
+      - name: "Quality Gate 2: Reporting Contracts"
+        run: npm run test:reporting
+
       - name: Run E2E Test Battery (Headless)
-        run: |
-          mkdir -p allure-results output/allure-results
-          HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
+        id: e2e
         continue-on-error: true
-
-      - name: Process Test Logs & Extract Metrics
         run: |
-          sed 's/\x1b\[[0-9;]*m//g' output/test-output.log > output/test-clean.log
-          PASSED=$(grep -oE '[0-9]+ passed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
-          FAILED=$(grep -oE '[0-9]+ failed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
-          SKIPPED=$(grep -oE '[0-9]+ skipped' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
-          TOTAL=$((PASSED + FAILED + SKIPPED))
-          echo "{\"passed\": $PASSED, \"failed\": $FAILED, \"skipped\": $SKIPPED, \"total\": $TOTAL}" > output/stats.json
-          echo "Stats: $(cat output/stats.json)"
+          mkdir -p allure-results output
+          set -o pipefail
+          HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
 
-      - name: "Tier 1: Generate GitHub Actions Step Summary"
-        run: |
-          P=$(grep -oE '"passed": [0-9]+' output/stats.json | grep -oE '[0-9]+')
-          F=$(grep -oE '"failed": [0-9]+' output/stats.json | grep -oE '[0-9]+')
-          S=$(grep -oE '"skipped": [0-9]+' output/stats.json | grep -oE '[0-9]+')
-          T=$(grep -oE '"total": [0-9]+' output/stats.json | grep -oE '[0-9]+')
-          echo "## 📊 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
-          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
-          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-          echo "| Total Tests | **$T** |" >> $GITHUB_STEP_SUMMARY
-          echo "| ✅ Passed | **$P** |" >> $GITHUB_STEP_SUMMARY
-          echo "| ❌ Failed | **$F** |" >> $GITHUB_STEP_SUMMARY
-          echo "| ⚠️ Skipped | **$S** |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "👉 [View Executive Dashboard](https://thienng-it.github.io/qa-utils-automation-tests/)" >> $GITHUB_STEP_SUMMARY
-
-      - name: Generate Allure Report
-        run: |
-          npx allure generate allure-results --clean -o output/allure-report || echo "Allure generation skipped"
+      - name: Normalize test log
+        if: always()
+        run: sed 's/\x1b\[[0-9;]*m//g' output/test-output.log > output/test-clean.log
 
       - name: Get current date
         id: date
-        run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+        run: echo "date=$(TZ=Asia/Ho_Chi_Minh date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
 
-      - name: Checkout gh-pages branch
+      - name: Checkout gh-pages history
+        if: github.event_name != 'pull_request'
         uses: actions/checkout@v4
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages-content
 
-      - name: Assemble Reports for GitHub Pages
+      - name: Add Allure run metadata and history
+        env:
+          RUN_DATE: ${{ steps.date.outputs.date }}
+          TARGET_URL: https://kobenguyent.github.io/kobeanqautils/
+          REPORT_PATH: reports/${{ steps.date.outputs.date }}/${{ github.run_id }}-${{ github.run_attempt }}/allure/index.html
         run: |
-          mkdir -p gh-pages-content/reports/${{ steps.date.outputs.date }}/allure
-          if [ -d output/allure-report ]; then
-            cp -r output/allure-report/. gh-pages-content/reports/${{ steps.date.outputs.date }}/allure/
-            echo '<html><head><meta http-equiv="refresh" content="0; url=allure/index.html"><script>window.location.replace("allure/index.html");</script></head><body><p>Redirecting to <a href="allure/index.html">Allure 3 Test Report</a>...</p></body></html>' > gh-pages-content/reports/${{ steps.date.outputs.date }}/index.html
-          fi
-          cp output/stats.json gh-pages-content/reports/${{ steps.date.outputs.date }}/stats.json
-
-      - name: Generate 30-Day Historical Trend Manifest
-        run: |
-          echo "[" > gh-pages-content/manifest.json
-          first=true
-          for dir in $(ls -dr gh-pages-content/reports/*/ 2>/dev/null); do
-            d=$(basename "$dir")
-            if [ -f "$dir/stats.json" ]; then
-              if [ "$first" = true ]; then first=false; else echo "," >> gh-pages-content/manifest.json; fi
-              P=$(grep -oE '"passed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
-              F=$(grep -oE '"failed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
-              S=$(grep -oE '"skipped": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
-              T=$((P + F + S))
-              echo "{\"date\":\"$d\",\"passed\":$P,\"failed\":$F,\"skipped\":$S,\"total\":$T}" >> gh-pages-content/manifest.json
+          if [ -f gh-pages-content/manifest.json ]; then
+            PREVIOUS_REPORT=$(jq -r 'if length > 0 then (.[0].reportPath // ("reports/" + .[0].date + "/allure/index.html")) else empty end' gh-pages-content/manifest.json)
+            PREVIOUS_DIR=${PREVIOUS_REPORT%/index.html}
+            if [ -n "$PREVIOUS_DIR" ] && [ -d "gh-pages-content/$PREVIOUS_DIR/history" ]; then
+              mkdir -p allure-results/history
+              cp -R "gh-pages-content/$PREVIOUS_DIR/history/." allure-results/history/
             fi
-          done
-          echo "]" >> gh-pages-content/manifest.json
+          fi
 
-      - name: Copy Dashboard HTML to Root
+          BUILD_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          REPORT_URL="https://thienng-it.github.io/qa-utils-automation-tests/$REPORT_PATH"
+          jq -n \
+            --arg name "GitHub Actions" \
+            --arg type "github" \
+            --arg url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions" \
+            --arg buildOrder "$GITHUB_RUN_NUMBER" \
+            --arg buildName "Run #$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT" \
+            --arg buildUrl "$BUILD_URL" \
+            --arg reportName "KobeanQAUtils E2E" \
+            --arg reportUrl "$REPORT_URL" \
+            '{name: $name, type: $type, url: $url, buildOrder: ($buildOrder | tonumber), buildName: $buildName, buildUrl: $buildUrl, reportName: $reportName, reportUrl: $reportUrl}' \
+            > allure-results/executor.json
+
+          printf '%s\n' \
+            "Target_URL=$TARGET_URL" \
+            "Browser=Chromium" \
+            "Runner_OS=$RUNNER_OS" \
+            "Node=$(node --version)" \
+            "Commit=$GITHUB_SHA" \
+            "Branch=$GITHUB_REF_NAME" \
+            "Trigger=$GITHUB_EVENT_NAME" \
+            > allure-results/environment.properties
+
+      - name: Generate Allure Report
+        run: npx allure generate allure-results --clean -o output/allure-report
+
+      - name: Build structured dashboard data
+        env:
+          RUN_DATE: ${{ steps.date.outputs.date }}
+          TARGET_URL: https://kobenguyent.github.io/kobeanqautils/
+          TEST_BROWSER: Chromium
+        run: node scripts/report-data.mjs output/allure-report gh-pages-content/manifest.json output/stats.json
+
+      - name: Generate GitHub Actions step summary
+        run: |
+          DURATION=$(jq -r '(.durationMs / 1000 | floor) | tostring + "s"' output/stats.json)
+          {
+            echo "## Test Execution Summary"
+            echo "| Metric | Count |"
+            echo "| :--- | ---: |"
+            echo "| Total | **$(jq -r .total output/stats.json)** |"
+            echo "| Passed | **$(jq -r .passed output/stats.json)** |"
+            echo "| Failed | **$(jq -r .failed output/stats.json)** |"
+            echo "| Broken | **$(jq -r .broken output/stats.json)** |"
+            echo "| Skipped | **$(jq -r .skipped output/stats.json)** |"
+            echo "| Retries | **$(jq -r .retries output/stats.json)** |"
+            echo "| Duration | **$DURATION** |"
+            echo
+            echo "[View executive dashboard](https://thienng-it.github.io/qa-utils-automation-tests/)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Assemble reports for GitHub Pages
+        if: github.event_name != 'pull_request'
+        env:
+          RUN_DATE: ${{ steps.date.outputs.date }}
+        run: |
+          RUN_KEY="$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          RUN_DIR="gh-pages-content/reports/$RUN_DATE/$RUN_KEY"
+          mkdir -p "$RUN_DIR/allure" "gh-pages-content/reports/$RUN_DATE/allure"
+          cp -R output/allure-report/. "$RUN_DIR/allure/"
+          cp output/stats.json "$RUN_DIR/run.json"
+          cp output/stats.json "gh-pages-content/reports/$RUN_DATE/stats.json"
+          printf '%s\n' "<!doctype html><meta http-equiv=\"refresh\" content=\"0;url=$RUN_KEY/allure/index.html\"><script>location.replace('$RUN_KEY/allure/index.html')</script><a href=\"$RUN_KEY/allure/index.html\">Open latest Allure report</a>" > "gh-pages-content/reports/$RUN_DATE/index.html"
+          printf '%s\n' "<!doctype html><meta http-equiv=\"refresh\" content=\"0;url=../$RUN_KEY/allure/index.html\"><script>location.replace('../$RUN_KEY/allure/index.html')</script><a href=\"../$RUN_KEY/allure/index.html\">Open latest Allure report</a>" > "gh-pages-content/reports/$RUN_DATE/allure/index.html"
+
+      - name: Copy dashboard HTML to root
+        if: github.event_name != 'pull_request'
         run: cp dashboard/index.html gh-pages-content/index.html
 
-      - name: Deploy Dashboard & Reports to GitHub Pages
+      - name: Deploy dashboard and reports to GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: gh-pages-content
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
 
-      - name: Upload Failure Artifacts
-        if: failure()
+      - name: Upload failure artifacts
+        if: always() && steps.e2e.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
-          name: failure-diagnostics
+          name: failure-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            output/*.png
-            output/*.webm
-            output/*.zip
+            output/**/*.png
+            output/**/*.webm
+            output/**/*.zip
             output/test-clean.log
+            allure-results
+          if-no-files-found: warn
           retention-days: 7
+
+      - name: Enforce E2E quality gate
+        if: always() && steps.e2e.outcome != 'success'
+        run: exit 1

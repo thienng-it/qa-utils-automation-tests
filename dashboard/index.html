@@ -738,13 +738,13 @@
         <div class="brand-logo">QA</div>
         <div class="brand-text">
           <h1>KobeanQAUtils <span style="font-weight: 500; font-size: 0.95rem; color: var(--text-muted);">| Quality Engineering Dashboard</span></h1>
-          <p id="dashboard-subtitle">Synchronizing enterprise test intelligence & 30-day reliability metrics</p>
+          <p id="dashboard-subtitle">Loading published test-run telemetry…</p>
         </div>
       </div>
       <div class="header-actions">
         <div class="status-pill" id="live-status-pill">
           <span class="pulse-dot"></span>
-          <span id="live-status-text">Production Stable</span>
+          <span id="live-status-text">Loading latest run</span>
         </div>
         <a class="nav-btn" href="https://kobenguyent.github.io/kobeanqautils/" target="_blank" rel="noopener">
           🌐 Open App
@@ -762,7 +762,7 @@
     <section class="hero-banner">
       <div class="hero-header">
         <div class="hero-title">
-          <h2>Latest Production Quality Gate</h2>
+          <h2>Latest Test Run</h2>
           <div class="meta" id="latest-run-meta">
             <span>Loading telemetry...</span>
           </div>
@@ -775,85 +775,72 @@
         <div class="kpi-card kpi-pass-rate">
           <div class="label">Pass Rate</div>
           <div class="value" id="kpi-pass-rate">--%</div>
-          <div class="subtext"><span class="kpi-badge badge-success" id="kpi-sla-badge">Target Met (≥ 98%)</span></div>
+          <div class="subtext" id="kpi-pass-rate-detail">Measured from this run</div>
         </div>
         <div class="kpi-card kpi-passed">
           <div class="label">Passed Scenarios</div>
           <div class="value" id="kpi-passed">--</div>
-          <div class="subtext">0 Regressions Detected</div>
+          <div class="subtext" id="kpi-passed-detail">Measured from this run</div>
         </div>
         <div class="kpi-card kpi-failed">
           <div class="label">Failed Scenarios</div>
           <div class="value" id="kpi-failed">--</div>
-          <div class="subtext">0 Blocking Defects</div>
+          <div class="subtext" id="kpi-failed-detail">Measured from this run</div>
         </div>
         <div class="kpi-card kpi-skipped">
           <div class="label">Skipped Scenarios</div>
           <div class="value" id="kpi-skipped">--</div>
-          <div class="subtext">100% Suite Executed</div>
+          <div class="subtext" id="kpi-skipped-detail">Measured from this run</div>
         </div>
         <div class="kpi-card kpi-total">
           <div class="label">Total Scenarios</div>
           <div class="value" id="kpi-total">--</div>
-          <div class="subtext">5 Enterprise Quality Gates</div>
+          <div class="subtext" id="kpi-total-detail">Measured from this run</div>
         </div>
       </div>
     </section>
 
-    <!-- 4 Strategic Quality Pillars -->
+    <!-- Measured run details -->
     <section class="pillars-grid">
       <div class="pillar-card">
         <div class="pillar-header">
-          <div class="pillar-title">🔍 Surface Discovery</div>
-          <span class="pillar-status">100% Covered</span>
+          <div class="pillar-title">Duration</div>
         </div>
-        <div class="pillar-stat">64 / 64 Tools</div>
-        <div class="pillar-desc">Continuous automated crawler verifies all tool headers, DOM rendering & zero uncaught console exceptions.</div>
+        <div class="pillar-stat" id="detail-duration">--</div>
+        <div class="pillar-desc">Elapsed execution time reported by Allure.</div>
       </div>
 
       <div class="pillar-card">
         <div class="pillar-header">
-          <div class="pillar-title">⚙️ Data-Driven E2E</div>
-          <span class="pillar-status">Zero Flakes</span>
+          <div class="pillar-title">Retries</div>
         </div>
-        <div class="pillar-stat">7 Converter Suites</div>
-        <div class="pillar-desc">Comprehensive RFC boundary vectors: Base64 (Unicode), JSON, JWT, Epoch (Y2K/2038), Hashes, and UUID v1/v4/v7.</div>
+        <div class="pillar-stat" id="detail-retries">--</div>
+        <div class="pillar-desc">Retries recorded for this run.</div>
       </div>
 
       <div class="pillar-card">
         <div class="pillar-header">
-          <div class="pillar-title">♿ A11y Compliance</div>
-          <span class="pillar-status">WCAG 2.1 AA</span>
+          <div class="pillar-title">Source</div>
         </div>
-        <div class="pillar-stat">0 Violations</div>
-        <div class="pillar-desc">Automated @axe-core/playwright audit sweeps critical portals for contrast, focus, ARIA tags, and keyboard access.</div>
+        <div class="pillar-stat" id="detail-source">--</div>
+        <div class="pillar-desc">Branch and commit that triggered this run.</div>
       </div>
 
       <div class="pillar-card">
         <div class="pillar-header">
-          <div class="pillar-title">⚡ Performance & CWV</div>
-          <span class="pillar-status">Under SLA</span>
+          <div class="pillar-title">Outcome</div>
         </div>
-        <div class="pillar-stat">&lt; 3.0s DOM</div>
-        <div class="pillar-desc">Core Web Vitals budgets strictly enforced across all 64 tools; Load Events consistently execute within 1.5 - 2.8s.</div>
+        <div class="pillar-stat" id="detail-outcome">--</div>
+        <div class="pillar-desc" id="detail-outcome-summary">Measured test status counts.</div>
       </div>
     </section>
-
-    <!-- Milestone Notification Banner -->
-    <div class="milestone-banner">
-      <div class="milestone-text">
-        <h3>✨ Enterprise Test Automation Framework V4 Deployed</h3>
-        <p>On 2026-09-04, the testing infrastructure upgraded from legacy 7-scenario smoke checks to 114 enterprise scenarios with 100% pass rate.</p>
-      </div>
-      <div class="milestone-badge">114 Passed • 0 Failed • 0 Flakes</div>
-    </div>
 
     <!-- 30-Day Quality Trajectory Chart -->
     <section class="chart-section">
       <div class="section-header">
         <div>
-          <h2>30-Day Quality Trajectory & Stability</h2>
-          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Visualizing daily pass rate % and test execution volume</p>
+          <h2>Recent Test-Run History</h2>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Pass rate and status counts for the latest 30 published runs</p>
         </div>
         <div class="chart-controls">
           <button class="tab-btn active" id="tab-passrate" onclick="switchChartMode('passrate')">Pass Rate %</button>
@@ -869,7 +856,9 @@
       <div class="chart-legend" id="chart-legend">
         <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div><span>Passed Scenarios</span></div>
         <div class="legend-item"><div class="legend-color" style="background: #ef4444;"></div><span>Failed Scenarios</span></div>
+        <div class="legend-item"><div class="legend-color" style="background: #8b5cf6;"></div><span>Broken</span></div>
         <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div><span>Skipped</span></div>
+        <div class="legend-item"><div class="legend-color" style="background: #64748b;"></div><span>Unknown</span></div>
       </div>
     </section>
 
@@ -878,13 +867,13 @@
       <div class="table-controls-bar">
         <div class="filter-group">
           <button class="filter-btn active" onclick="setTableFilter('all', this)">All Runs (<span id="count-all">0</span>)</button>
-          <button class="filter-btn" onclick="setTableFilter('passed', this)">Passed Only (<span id="count-passed">0</span>)</button>
+          <button class="filter-btn" onclick="setTableFilter('passed', this)">Completed Cleanly (<span id="count-passed">0</span>)</button>
           <button class="filter-btn" onclick="setTableFilter('failed', this)">Needs Attention (<span id="count-failed">0</span>)</button>
-          <button class="filter-btn" onclick="setTableFilter('modern', this)">Enterprise V4 (100+ Tests)</button>
+          <button class="filter-btn" onclick="setTableFilter('structured', this)">Structured Runs</button>
         </div>
         <div class="search-box">
           <svg viewBox="0 0 24 24"><path d="M21.71 20.29l-5.4-5.4A7.9 7.9 0 0018 10a8 8 0 10-8 8 7.9 7.9 0 004.89-1.69l5.4 5.4a1 1 0 001.42 0 1 1 0 000-1.42zM4 10a6 6 0 116 6 6 6 0 01-6-6z"/></svg>
-          <input type="text" id="table-search" placeholder="Search by date (YYYY-MM-DD)..." oninput="handleSearch(this.value)">
+          <input type="text" id="table-search" placeholder="Search run, date, or branch..." oninput="handleSearch(this.value)">
         </div>
       </div>
 
@@ -892,15 +881,16 @@
         <table>
           <thead>
             <tr>
-              <th onclick="sortTable(0)">#</th>
-              <th onclick="sortTable(1)">Run Date</th>
+              <th onclick="sortTable(0)">Run</th>
+              <th onclick="sortTable(1)">Started</th>
               <th onclick="sortTable(2)">Execution Status</th>
               <th onclick="sortTable(3)">Passed</th>
               <th onclick="sortTable(4)">Failed</th>
-              <th onclick="sortTable(5)">Skipped</th>
-              <th onclick="sortTable(6)">Total</th>
-              <th onclick="sortTable(7)">Pass Rate</th>
-              <th>Suite Generation</th>
+              <th onclick="sortTable(5)">Broken</th>
+              <th onclick="sortTable(6)">Skipped</th>
+              <th onclick="sortTable(7)">Unknown</th>
+              <th onclick="sortTable(8)">Total</th>
+              <th onclick="sortTable(9)">Pass Rate</th>
               <th>Detailed Report</th>
             </tr>
           </thead>
@@ -943,122 +933,6 @@
     let currentPage = 1;
     const pageSize = 15;
 
-    async function loadDashboard() {
-      try {
-        const res = await fetch('manifest.json');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        rawData = await res.json();
-      } catch (err) {
-        console.warn('Could not load local manifest.json, attempting fetch from live GitHub Pages...');
-        try {
-          const remoteRes = await fetch('https://thienng-it.github.io/qa-utils-automation-tests/manifest.json');
-          if (remoteRes.ok) {
-            rawData = await remoteRes.json();
-          } else {
-            throw new Error('Remote manifest unreachable');
-          }
-        } catch (remoteErr) {
-          console.warn('Using fallback baseline data.');
-          rawData = [
-            { date: '2026-09-04', passed: 114, failed: 0, skipped: 0, total: 114 },
-            { date: '2026-09-03', passed: 0, failed: 7, skipped: 0, total: 7 },
-            { date: '2026-09-02', passed: 0, failed: 7, skipped: 0, total: 7 },
-            { date: '2026-09-01', passed: 0, failed: 7, skipped: 0, total: 7 }
-          ];
-        }
-      }
-
-      if (!rawData || !rawData.length) {
-        document.getElementById('dashboard-subtitle').textContent = 'No test execution telemetry recorded yet.';
-        return;
-      }
-
-      // Sort chronological descending
-      rawData.sort((a, b) => b.date.localeCompare(a.date));
-
-      renderHeroMetrics();
-      updateFilterCounts();
-      applyFilters();
-      renderTrendChart();
-    }
-
-    function resolveReportUrl(date, isModern) {
-      const subpath = isModern ? `reports/${date}/allure/index.html` : `reports/${date}/index.html`;
-      
-      // When accessed from localhost (e.g. localhost:8080 or 127.0.0.1) or file://, always target the live GitHub Pages hosted report
-      const isLocal = window.location.hostname === 'localhost' || 
-                      window.location.hostname === '127.0.0.1' || 
-                      window.location.protocol === 'file:';
-      if (isLocal) {
-        return `https://thienng-it.github.io/qa-utils-automation-tests/${subpath}`;
-      }
-      
-      // On GitHub Pages, ensure proper absolute path resolution
-      const path = window.location.pathname;
-      const baseDir = path.endsWith('/') ? path : path.substring(0, path.lastIndexOf('/') + 1);
-      return `${window.location.origin}${baseDir}${subpath}`;
-    }
-
-    function renderHeroMetrics() {
-      const latest = rawData[0];
-      const passRate = latest.total > 0 ? ((latest.passed / latest.total) * 100).toFixed(1) : '0.0';
-
-      document.getElementById('dashboard-subtitle').textContent = 
-        `${rawData.length} historical run(s) recorded — Latest execution on ${latest.date}`;
-      
-      const metaEl = document.getElementById('latest-run-meta');
-      metaEl.innerHTML = `
-        <span class="meta-tag">📅 ${latest.date}</span>
-        <span class="meta-tag">⚡ CodeceptJS 4.1.0 + Playwright</span>
-        <span class="meta-tag">🎯 Production (${latest.total} Scenarios)</span>
-        <span class="meta-tag">⏱️ Headless Chromium</span>
-      `;
-
-      // Top KPIs
-      document.getElementById('kpi-pass-rate').textContent = `${passRate}%`;
-      document.getElementById('kpi-passed').textContent = latest.passed;
-      document.getElementById('kpi-failed').textContent = latest.failed;
-      document.getElementById('kpi-skipped').textContent = latest.skipped;
-      document.getElementById('kpi-total').textContent = latest.total;
-
-      const slaBadge = document.getElementById('kpi-sla-badge');
-      if (parseFloat(passRate) >= 98.0) {
-        slaBadge.className = 'kpi-badge badge-success';
-        slaBadge.textContent = 'Target Met (≥ 98%)';
-      } else {
-        slaBadge.className = 'kpi-badge badge-danger';
-        slaBadge.textContent = 'Degraded (< 98%)';
-      }
-
-      // Status Pill
-      const livePillText = document.getElementById('live-status-text');
-      if (latest.failed === 0 && latest.passed > 0) {
-        livePillText.textContent = `Production Stable (100%)`;
-      } else {
-        livePillText.textContent = `Failures Detected (${latest.failed})`;
-      }
-
-      // Latest Report Button
-      const btnContainer = document.getElementById('latest-report-btn-container');
-      const isModern = latest.total > 10;
-      const reportUrl = resolveReportUrl(latest.date, isModern);
-      btnContainer.innerHTML = `
-        <a class="action-btn allure" style="padding: 8px 18px; font-size: 0.85rem;" href="${reportUrl}" target="_blank" rel="noopener">
-          📊 Open Latest Allure 3 Report &rarr;
-        </a>
-      `;
-    }
-
-    function updateFilterCounts() {
-      const allCount = rawData.length;
-      const passedCount = rawData.filter(r => r.failed === 0 && r.passed > 0).length;
-      const failedCount = rawData.filter(r => r.failed > 0).length;
-
-      document.getElementById('count-all').textContent = allCount;
-      document.getElementById('count-passed').textContent = passedCount;
-      document.getElementById('count-failed').textContent = failedCount;
-    }
-
     function setTableFilter(filter, el) {
       activeFilter = filter;
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -1073,121 +947,6 @@
       applyFilters();
     }
 
-    function applyFilters() {
-      filteredData = rawData.filter(item => {
-        // Search filter
-        if (searchQuery && !item.date.toLowerCase().includes(searchQuery)) {
-          return false;
-        }
-        // Category filter
-        if (activeFilter === 'passed') return item.failed === 0 && item.passed > 0;
-        if (activeFilter === 'failed') return item.failed > 0;
-        if (activeFilter === 'modern') return item.total > 10;
-        return true;
-      });
-
-      renderTable();
-    }
-
-    function sortTable(colIndex) {
-      if (sortColumn === colIndex) {
-        sortAscending = !sortAscending;
-      } else {
-        sortColumn = colIndex;
-        sortAscending = (colIndex === 1); // default asc for date, desc for others
-      }
-
-      const keys = ['_idx', 'date', '_status', 'passed', 'failed', 'skipped', 'total', '_rate'];
-      const key = keys[colIndex];
-
-      filteredData.sort((a, b) => {
-        let valA, valB;
-        if (key === '_idx') return 0;
-        if (key === '_status') {
-          valA = a.failed === 0 ? 1 : 0;
-          valB = b.failed === 0 ? 1 : 0;
-        } else if (key === '_rate') {
-          valA = a.total > 0 ? (a.passed / a.total) : 0;
-          valB = b.total > 0 ? (b.passed / b.total) : 0;
-        } else {
-          valA = a[key];
-          valB = b[key];
-        }
-
-        if (typeof valA === 'number') {
-          return sortAscending ? valA - valB : valB - valA;
-        }
-        return sortAscending ? String(valA).localeCompare(valB) : String(valB).localeCompare(valA);
-      });
-
-      renderTable();
-    }
-
-    function renderTable() {
-      const tbody = document.getElementById('runs-tbody');
-      if (!filteredData.length) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; padding: 32px; color: var(--text-muted);">No runs matched the selected filter.</td></tr>`;
-        document.getElementById('pagination-info').textContent = 'Showing 0 of 0 runs';
-        document.getElementById('btn-prev').disabled = true;
-        document.getElementById('btn-next').disabled = true;
-        return;
-      }
-
-      const totalItems = filteredData.length;
-      const totalPages = Math.ceil(totalItems / pageSize);
-      if (currentPage > totalPages) currentPage = totalPages;
-      if (currentPage < 1) currentPage = 1;
-
-      const startIndex = (currentPage - 1) * pageSize;
-      const endIndex = Math.min(startIndex + pageSize, totalItems);
-      const pageItems = filteredData.slice(startIndex, endIndex);
-
-      tbody.innerHTML = pageItems.map((r, i) => {
-        const isPass = r.failed === 0 && r.passed > 0;
-        const rate = r.total > 0 ? Math.round((r.passed / r.total) * 100) : 0;
-        const isModern = r.total > 10;
-        const suiteBadge = isModern 
-          ? `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; background: #e0e7ff; color: #4338ca; font-size: 0.72rem; font-weight: 600;">Enterprise V4</span>`
-          : `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; background: #f1f5f9; color: #64748b; font-size: 0.72rem; font-weight: 600;">Legacy V3</span>`;
-
-        const reportUrl = resolveReportUrl(r.date, isModern);
-        const actionBtn = isModern
-          ? `<a class="action-btn allure" href="${reportUrl}" target="_blank" rel="noopener">Allure 3 &rarr;</a>`
-          : `<a class="action-btn legacy" href="${reportUrl}" target="_blank" rel="noopener">Legacy HTML</a>`;
-
-        return `
-          <tr>
-            <td style="color: var(--text-muted); font-size: 0.78rem;">${startIndex + i + 1}</td>
-            <td style="font-weight: 600; font-family: 'JetBrains Mono', monospace;">${r.date}</td>
-            <td>
-              <span class="status-badge ${isPass ? 'pass' : 'fail'}">
-                ${isPass ? '● PASSED' : '● FAILED'}
-              </span>
-            </td>
-            <td class="num-pass">${r.passed}</td>
-            <td class="num-fail">${r.failed}</td>
-            <td class="num-skip">${r.skipped}</td>
-            <td class="num-total">${r.total}</td>
-            <td>
-              <div class="progress-bar-cell">
-                <div class="progress-track">
-                  <div class="progress-fill" style="width: ${rate}%; background: ${isPass ? '#10b981' : '#ef4444'};"></div>
-                </div>
-                <span style="font-size: 0.78rem; font-weight: 700; width: 36px;">${rate}%</span>
-              </div>
-            </td>
-            <td>${suiteBadge}</td>
-            <td>${actionBtn}</td>
-          </tr>
-        `;
-      }).join('');
-
-      document.getElementById('pagination-info').textContent = `Showing ${startIndex + 1}–${endIndex} of ${totalItems} runs`;
-      document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
-      document.getElementById('btn-prev').disabled = (currentPage === 1);
-      document.getElementById('btn-next').disabled = (currentPage === totalPages);
-    }
-
     function changePage(delta) {
       currentPage += delta;
       renderTable();
@@ -1200,186 +959,297 @@
       renderTrendChart();
     }
 
-    function renderTrendChart() {
-      const container = document.getElementById('chart-container');
-      const svg = document.getElementById('trend-svg');
-      const tooltip = document.getElementById('chart-tooltip');
-
-      // Slice 30 days and reverse chronologically (left to right)
-      const data30 = rawData.slice(0, 30).reverse();
-      if (!data30.length) return;
-
-      const width = container.clientWidth || 1190;
-      const height = 220;
-      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-      svg.innerHTML = '';
-
-      const paddingLeft = 45;
-      const paddingRight = 20;
-      const paddingTop = 20;
-      const paddingBottom = 35;
-      const plotWidth = width - paddingLeft - paddingRight;
-      const plotHeight = height - paddingTop - paddingBottom;
-
-      const n = data30.length;
-      const barWidth = Math.min(Math.max((plotWidth / n) * 0.65, 8), 28);
-      const step = plotWidth / n;
-
-      // Draw Gridlines & Y-Axis Labels
-      const gridLevels = 4;
-      for (let i = 0; i <= gridLevels; i++) {
-        const y = paddingTop + (plotHeight / gridLevels) * i;
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', paddingLeft);
-        line.setAttribute('x2', width - paddingRight);
-        line.setAttribute('y1', y);
-        line.setAttribute('y2', y);
-        line.setAttribute('stroke', '#f1f5f9');
-        line.setAttribute('stroke-dasharray', '3 3');
-        svg.appendChild(line);
-
-        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        label.setAttribute('x', paddingLeft - 8);
-        label.setAttribute('y', y + 4);
-        label.setAttribute('text-anchor', 'end');
-        label.setAttribute('font-size', '10');
-        label.setAttribute('fill', '#94a3b8');
-        label.setAttribute('font-family', 'JetBrains Mono, monospace');
-
-        if (chartMode === 'passrate') {
-          const val = Math.round(100 - (100 / gridLevels) * i);
-          label.textContent = `${val}%`;
-        } else {
-          const maxVol = Math.max(...data30.map(d => d.total), 10);
-          const val = Math.round(maxVol - (maxVol / gridLevels) * i);
-          label.textContent = val;
-        }
-        svg.appendChild(label);
-      }
-
-      // Max scale for volume mode
-      const maxVolume = Math.max(...data30.map(d => d.total), 10);
-
-      // Render Bars
-      data30.forEach((item, index) => {
-        const cx = paddingLeft + step * index + step / 2;
-        const x = cx - barWidth / 2;
-        const rate = item.total > 0 ? (item.passed / item.total) : 0;
-
-        if (chartMode === 'passrate') {
-          // Pass rate bar with background track
-          const barH = plotHeight * rate;
-          const y = paddingTop + (plotHeight - barH);
-
-          // Track
-          const track = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-          track.setAttribute('x', x);
-          track.setAttribute('y', paddingTop);
-          track.setAttribute('width', barWidth);
-          track.setAttribute('height', plotHeight);
-          track.setAttribute('fill', '#f8fafc');
-          track.setAttribute('rx', '3');
-          svg.appendChild(track);
-
-          // Active Bar
-          const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-          bar.setAttribute('x', x);
-          bar.setAttribute('y', y);
-          bar.setAttribute('width', barWidth);
-          bar.setAttribute('height', Math.max(barH, 3));
-          bar.setAttribute('fill', rate >= 0.98 ? '#10b981' : (rate > 0 ? '#f59e0b' : '#ef4444'));
-          bar.setAttribute('rx', '3');
-          bar.style.cursor = 'pointer';
-
-          // Hover events
-          bar.addEventListener('mouseenter', (e) => showTooltip(e, item, rate));
-          bar.addEventListener('mousemove', (e) => moveTooltip(e));
-          bar.addEventListener('mouseleave', hideTooltip);
-
-          svg.appendChild(bar);
-        } else {
-          // Stacked Volume Bar: Passed (green) + Failed (red) + Skipped (amber)
-          const passH = (item.passed / maxVolume) * plotHeight;
-          const failH = (item.failed / maxVolume) * plotHeight;
-          const skipH = (item.skipped / maxVolume) * plotHeight;
-
-          let currentY = paddingTop + plotHeight;
-
-          if (passH > 0) {
-            currentY -= passH;
-            const pBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            pBar.setAttribute('x', x);
-            pBar.setAttribute('y', currentY);
-            pBar.setAttribute('width', barWidth);
-            pBar.setAttribute('height', passH);
-            pBar.setAttribute('fill', '#10b981');
-            pBar.style.cursor = 'pointer';
-            pBar.addEventListener('mouseenter', (e) => showTooltip(e, item, rate));
-            pBar.addEventListener('mousemove', (e) => moveTooltip(e));
-            pBar.addEventListener('mouseleave', hideTooltip);
-            svg.appendChild(pBar);
-          }
-
-          if (failH > 0) {
-            currentY -= failH;
-            const fBar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            fBar.setAttribute('x', x);
-            fBar.setAttribute('y', currentY);
-            fBar.setAttribute('width', barWidth);
-            fBar.setAttribute('height', failH);
-            fBar.setAttribute('fill', '#ef4444');
-            fBar.style.cursor = 'pointer';
-            fBar.addEventListener('mouseenter', (e) => showTooltip(e, item, rate));
-            fBar.addEventListener('mousemove', (e) => moveTooltip(e));
-            fBar.addEventListener('mouseleave', hideTooltip);
-            svg.appendChild(fBar);
-          }
-        }
-
-        // X-Axis date label (every 3rd or on key milestone)
-        if (index % 3 === 0 || index === n - 1) {
-          const dateTxt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          dateTxt.setAttribute('x', cx);
-          dateTxt.setAttribute('y', height - 10);
-          dateTxt.setAttribute('text-anchor', 'middle');
-          dateTxt.setAttribute('font-size', '9');
-          dateTxt.setAttribute('fill', index === n - 1 ? '#0f172a' : '#94a3b8');
-          dateTxt.setAttribute('font-weight', index === n - 1 ? '700' : '500');
-          dateTxt.setAttribute('font-family', 'JetBrains Mono, monospace');
-          dateTxt.textContent = item.date.slice(5);
-          svg.appendChild(dateTxt);
-        }
-      });
-
-      function showTooltip(e, item, rate) {
-        const pct = (rate * 100).toFixed(1);
-        tooltip.innerHTML = `
-          <div style="font-weight:700; border-bottom:1px solid #334155; padding-bottom:4px; margin-bottom:4px;">
-            ${item.date} ${item.total > 10 ? '✨ (Enterprise V4)' : '(Legacy)'}
-          </div>
-          <div>Pass Rate: <strong>${pct}%</strong></div>
-          <div>Passed: <span style="color:#34d399">${item.passed}</span> | Failed: <span style="color:#f87171">${item.failed}</span></div>
-          <div>Total Scenarios: <strong>${item.total}</strong></div>
-        `;
-        tooltip.style.display = 'block';
-        moveTooltip(e);
-      }
-
-      function moveTooltip(e) {
-        const rect = container.getBoundingClientRect();
-        tooltip.style.left = `${e.clientX - rect.left + 15}px`;
-        tooltip.style.top = `${e.clientY - rect.top - 20}px`;
-      }
-
-      function hideTooltip() {
-        tooltip.style.display = 'none';
-      }
-    }
-
     // Auto-refresh chart on window resize
     window.addEventListener('resize', () => {
       renderTrendChart();
     });
+
+    function count(run, key) {
+      const value = Number(run && run[key]);
+      return Number.isFinite(value) && value >= 0 ? value : 0;
+    }
+
+    function startedAt(run) {
+      const started = Date.parse(run && run.startedAt);
+      if (Number.isFinite(started)) return started;
+      const legacyDate = Date.parse(run && run.date);
+      return Number.isFinite(legacyDate) ? legacyDate : 0;
+    }
+
+    function hasAdverseResult(run) {
+      return count(run, 'failed') + count(run, 'broken') + count(run, 'unknown') > 0;
+    }
+
+    function isCleanRun(run) {
+      return !hasAdverseResult(run) && count(run, 'skipped') === 0 && count(run, 'passed') > 0;
+    }
+
+    function runLabel(run) {
+      if (run.runNumber !== undefined && run.runNumber !== null) {
+        return `Run #${run.runNumber}.${run.runAttempt ?? 1}`;
+      }
+      return run.runId ? `Run ${run.runId}` : (run.date || 'Legacy run');
+    }
+
+    function resultLabel(run) {
+      if (hasAdverseResult(run)) return 'NEEDS ATTENTION';
+      if (count(run, 'skipped') > 0) return 'INCOMPLETE';
+      return count(run, 'passed') > 0 ? 'PASSED' : 'UNKNOWN';
+    }
+
+    function formatDuration(durationMs) {
+      const seconds = Math.floor(count({ durationMs }, 'durationMs') / 1000);
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds = seconds % 60;
+      if (hours) return `${hours}h ${minutes}m ${remainingSeconds}s`;
+      return minutes ? `${minutes}m ${remainingSeconds}s` : `${remainingSeconds}s`;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[character]);
+    }
+
+    function isPreview() {
+      return window.location.protocol === 'file:' || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    }
+
+    async function fetchManifest(url) {
+      const response = await fetch(`${url}?v=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      if (!Array.isArray(payload)) throw new Error('Manifest is not an array');
+      return payload;
+    }
+
+    async function loadDashboard() {
+      try {
+        rawData = await fetchManifest('manifest.json');
+      } catch (error) {
+        if (isPreview()) {
+          try {
+            rawData = await fetchManifest('https://thienng-it.github.io/qa-utils-automation-tests/manifest.json');
+          } catch (remoteError) {
+            console.warn('Could not load published manifest.', remoteError);
+            rawData = [];
+          }
+        } else {
+          console.warn('Could not load published manifest.', error);
+          rawData = [];
+        }
+      }
+
+      rawData = rawData.filter((run) => run && typeof run === 'object').sort((a, b) => startedAt(b) - startedAt(a));
+      if (!rawData.length) {
+        renderEmptyState();
+        return;
+      }
+      renderHeroMetrics();
+      updateFilterCounts();
+      applyFilters();
+      renderTrendChart();
+    }
+
+    function renderEmptyState() {
+      document.getElementById('dashboard-subtitle').textContent = 'No published test-run telemetry is available.';
+      document.getElementById('latest-run-meta').textContent = 'No runs recorded';
+      document.getElementById('live-status-text').textContent = 'No telemetry';
+      document.getElementById('latest-report-btn-container').textContent = '';
+      ['kpi-pass-rate', 'kpi-passed', 'kpi-failed', 'kpi-skipped', 'kpi-total', 'detail-duration', 'detail-retries', 'detail-source', 'detail-outcome'].forEach((id) => {
+        document.getElementById(id).textContent = '--';
+      });
+      document.getElementById('detail-outcome-summary').textContent = 'No manifest records were returned.';
+      updateFilterCounts();
+      applyFilters();
+      renderTrendChart();
+    }
+
+    function resolveReportUrl(run) {
+      const reportPath = run.reportPath || `reports/${run.date}/index.html`;
+      if (/^https?:\/\//i.test(reportPath)) return reportPath;
+      const base = isPreview()
+        ? 'https://thienng-it.github.io/qa-utils-automation-tests/'
+        : window.location.href;
+      return new URL(reportPath, base).href;
+    }
+
+    function renderHeroMetrics() {
+      const latest = rawData[0];
+      const passed = count(latest, 'passed');
+      const failed = count(latest, 'failed');
+      const broken = count(latest, 'broken');
+      const skipped = count(latest, 'skipped');
+      const unknown = count(latest, 'unknown');
+      const total = count(latest, 'total');
+      const passRate = total ? ((passed / total) * 100).toFixed(1) : '0.0';
+      const source = `${latest.branch || 'unknown branch'} @ ${(latest.commit || 'unknown').slice(0, 7)}`;
+
+      document.getElementById('dashboard-subtitle').textContent = `${rawData.length} published run(s) — latest started ${latest.startedAt || latest.date || 'at an unknown time'}`;
+      document.getElementById('latest-run-meta').innerHTML = [
+        `<span class="meta-tag">${escapeHtml(runLabel(latest))}</span>`,
+        `<span class="meta-tag">${escapeHtml(latest.date || 'Unknown date')}</span>`,
+        `<span class="meta-tag">${escapeHtml(latest.workflow || 'Published run')}</span>`
+      ].join('');
+      document.getElementById('kpi-pass-rate').textContent = `${passRate}%`;
+      document.getElementById('kpi-passed').textContent = passed;
+      document.getElementById('kpi-failed').textContent = failed;
+      document.getElementById('kpi-skipped').textContent = skipped;
+      document.getElementById('kpi-total').textContent = total;
+      document.getElementById('kpi-pass-rate-detail').textContent = `${passed} passed of ${total} total`;
+      document.getElementById('kpi-passed-detail').textContent = `${broken} broken · ${unknown} unknown`;
+      document.getElementById('kpi-failed-detail').textContent = `Broken ${broken} · Unknown ${unknown}`;
+      document.getElementById('kpi-skipped-detail').textContent = skipped ? 'Run was not fully executed' : 'No scenarios skipped';
+      document.getElementById('kpi-total-detail').textContent = runLabel(latest);
+      document.getElementById('detail-duration').textContent = formatDuration(latest.durationMs);
+      document.getElementById('detail-retries').textContent = count(latest, 'retries');
+      document.getElementById('detail-source').textContent = source;
+      document.getElementById('detail-outcome').textContent = resultLabel(latest);
+      document.getElementById('detail-outcome-summary').textContent = `Failed ${failed} · Broken ${broken} · Unknown ${unknown} · Skipped ${skipped}`;
+      document.getElementById('live-status-text').textContent = hasAdverseResult(latest)
+        ? `Needs attention: ${failed} failed, ${broken} broken, ${unknown} unknown`
+        : skipped ? `Incomplete: ${skipped} skipped` : 'Latest run passed';
+      document.getElementById('latest-report-btn-container').innerHTML = `
+        <a class="action-btn allure" style="padding: 8px 18px; font-size: 0.85rem;" href="${escapeHtml(resolveReportUrl(latest))}" target="_blank" rel="noopener">Open latest report →</a>`;
+    }
+
+    function updateFilterCounts() {
+      document.getElementById('count-all').textContent = rawData.length;
+      document.getElementById('count-passed').textContent = rawData.filter(isCleanRun).length;
+      document.getElementById('count-failed').textContent = rawData.filter(hasAdverseResult).length;
+    }
+
+    function applyFilters() {
+      filteredData = rawData.filter((run) => {
+        const haystack = `${run.date || ''} ${run.runNumber || ''} ${run.runId || ''} ${run.branch || ''}`.toLowerCase();
+        if (searchQuery && !haystack.includes(searchQuery)) return false;
+        if (activeFilter === 'passed') return isCleanRun(run);
+        if (activeFilter === 'failed') return hasAdverseResult(run);
+        if (activeFilter === 'structured') return Boolean(run.runId || run.reportPath || run.startedAt);
+        return true;
+      });
+      renderTable();
+    }
+
+    function sortTable(colIndex) {
+      sortAscending = sortColumn === colIndex ? !sortAscending : colIndex === 1;
+      sortColumn = colIndex;
+      const keys = ['runNumber', '_started', '_status', 'passed', 'failed', 'broken', 'skipped', 'unknown', 'total', '_rate'];
+      const key = keys[colIndex];
+      filteredData.sort((a, b) => {
+        const value = (run) => {
+          if (key === '_started') return startedAt(run);
+          if (key === '_status') return hasAdverseResult(run) ? 0 : isCleanRun(run) ? 2 : 1;
+          if (key === '_rate') return count(run, 'total') ? count(run, 'passed') / count(run, 'total') : 0;
+          return key === 'runNumber' ? Number(run.runNumber || 0) : count(run, key);
+        };
+        return sortAscending ? value(a) - value(b) : value(b) - value(a);
+      });
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('runs-tbody');
+      if (!filteredData.length) {
+        tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; padding: 32px; color: var(--text-muted);">No runs matched the selected filter.</td></tr>';
+        document.getElementById('pagination-info').textContent = 'Showing 0 of 0 runs';
+        document.getElementById('page-indicator').textContent = 'Page 1';
+        document.getElementById('btn-prev').disabled = true;
+        document.getElementById('btn-next').disabled = true;
+        return;
+      }
+      const totalItems = filteredData.length;
+      const totalPages = Math.ceil(totalItems / pageSize);
+      currentPage = Math.min(Math.max(currentPage, 1), totalPages);
+      const startIndex = (currentPage - 1) * pageSize;
+      const pageItems = filteredData.slice(startIndex, startIndex + pageSize);
+      tbody.innerHTML = pageItems.map((run) => {
+        const total = count(run, 'total');
+        const rate = total ? Math.round((count(run, 'passed') / total) * 100) : 0;
+        const adverse = hasAdverseResult(run);
+        const label = resultLabel(run);
+        return `<tr>
+          <td style="font-weight: 600; font-family: 'JetBrains Mono', monospace;">${escapeHtml(runLabel(run))}</td>
+          <td>${escapeHtml(run.startedAt || run.date || 'Unknown')}</td>
+          <td><span class="status-badge ${adverse ? 'fail' : isCleanRun(run) ? 'pass' : 'fail'}">● ${label}</span></td>
+          <td class="num-pass">${count(run, 'passed')}</td><td class="num-fail">${count(run, 'failed')}</td>
+          <td class="num-fail">${count(run, 'broken')}</td><td class="num-skip">${count(run, 'skipped')}</td>
+          <td class="num-total">${count(run, 'unknown')}</td><td class="num-total">${total}</td>
+          <td><div class="progress-bar-cell"><div class="progress-track"><div class="progress-fill" style="width:${rate}%; background:${isCleanRun(run) ? '#10b981' : adverse ? '#ef4444' : '#f59e0b'};"></div></div><span style="font-size:0.78rem;font-weight:700;width:36px;">${rate}%</span></div></td>
+          <td><a class="action-btn ${run.reportPath ? 'allure' : 'legacy'}" href="${escapeHtml(resolveReportUrl(run))}" target="_blank" rel="noopener">Open report →</a></td>
+        </tr>`;
+      }).join('');
+      const endIndex = startIndex + pageItems.length;
+      document.getElementById('pagination-info').textContent = `Showing ${startIndex + 1}–${endIndex} of ${totalItems} runs`;
+      document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${totalPages}`;
+      document.getElementById('btn-prev').disabled = currentPage === 1;
+      document.getElementById('btn-next').disabled = currentPage === totalPages;
+    }
+
+    function renderTrendChart() {
+      const container = document.getElementById('chart-container');
+      const svg = document.getElementById('trend-svg');
+      const tooltip = document.getElementById('chart-tooltip');
+      const records = rawData.slice(0, 30).reverse();
+      svg.innerHTML = '';
+      if (!records.length) return;
+      const width = container.clientWidth || 1190;
+      const height = 220;
+      const left = 45, right = 20, top = 20, bottom = 35;
+      const plotWidth = width - left - right, plotHeight = height - top - bottom;
+      const max = chartMode === 'volume' ? Math.max(10, ...records.map((run) => count(run, 'total'))) : 1;
+      const step = plotWidth / records.length;
+      const barWidth = Math.min(28, Math.max(8, step * 0.65));
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      const add = (tag, attributes) => {
+        const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        Object.entries(attributes).forEach(([name, value]) => node.setAttribute(name, value));
+        svg.appendChild(node);
+        return node;
+      };
+      for (let index = 0; index <= 4; index += 1) {
+        const y = top + plotHeight * index / 4;
+        add('line', { x1: left, x2: width - right, y1: y, y2: y, stroke: '#f1f5f9', 'stroke-dasharray': '3 3' });
+        add('text', { x: left - 8, y: y + 4, 'text-anchor': 'end', 'font-size': 10, fill: '#94a3b8' }).textContent = chartMode === 'volume' ? Math.round(max * (4 - index) / 4) : `${Math.round((4 - index) * 25)}%`;
+      }
+      records.forEach((run, index) => {
+        const x = left + step * index + (step - barWidth) / 2;
+        const parts = chartMode === 'volume'
+          ? [['passed', '#10b981'], ['failed', '#ef4444'], ['broken', '#8b5cf6'], ['skipped', '#f59e0b'], ['unknown', '#64748b']]
+          : [['passed', isCleanRun(run) ? '#10b981' : hasAdverseResult(run) ? '#ef4444' : '#f59e0b']];
+        add('rect', { x, y: top, width: barWidth, height: plotHeight, fill: '#f8fafc', rx: 3 });
+        let y = top + plotHeight;
+        parts.forEach(([key, color]) => {
+          const value = chartMode === 'volume' ? count(run, key) / max : (count(run, 'total') ? count(run, 'passed') / count(run, 'total') : 0);
+          const barHeight = plotHeight * value;
+          if (!barHeight) return;
+          y -= barHeight;
+          const bar = add('rect', { x, y, width: barWidth, height: Math.max(barHeight, 3), fill: color, rx: 3 });
+          bar.style.cursor = 'pointer';
+          bar.addEventListener('mouseenter', (event) => showTooltip(event, run));
+          bar.addEventListener('mousemove', moveTooltip);
+          bar.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+        });
+        if (index % 3 === 0 || index === records.length - 1) {
+          add('text', { x: x + barWidth / 2, y: height - 10, 'text-anchor': 'middle', 'font-size': 9, fill: '#94a3b8' }).textContent = (run.date || '').slice(5) || runLabel(run);
+        }
+      });
+      function showTooltip(event, run) {
+        const total = count(run, 'total');
+        const rate = total ? ((count(run, 'passed') / total) * 100).toFixed(1) : '0.0';
+        tooltip.innerHTML = `<div style="font-weight:700">${escapeHtml(runLabel(run))}</div><div>${escapeHtml(run.date || 'Unknown date')} · ${rate}% pass</div><div>Passed ${count(run, 'passed')} · Failed ${count(run, 'failed')} · Broken ${count(run, 'broken')} · Skipped ${count(run, 'skipped')} · Unknown ${count(run, 'unknown')}</div>`;
+        tooltip.style.display = 'block';
+        moveTooltip(event);
+      }
+      function moveTooltip(event) {
+        const rect = container.getBoundingClientRect();
+        tooltip.style.left = `${event.clientX - rect.left + 15}px`;
+        tooltip.style.top = `${event.clientY - rect.top - 20}px`;
+      }
+    }
+
+    setInterval(loadDashboard, 60_000);
 
     // Initialize Dashboard
     loadDashboard();

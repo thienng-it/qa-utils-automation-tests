@@ -15,11 +15,12 @@
     "test:stress": "HEADLESS=true npx codeceptjs run tests/stress/stress_test.ts --steps",
     "test:all": "HEADLESS=true npx codeceptjs run --steps",
     "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2",
+    "test:reporting": "node --test scripts/report-data.test.mjs scripts/dashboard.test.mjs",
     "report:allure": "npx allure generate allure-results --clean -o output/allure-report",
     "codegraph:sync": "npx codegraph sync .",
     "codegraph:status": "npx codegraph status .",
     "beads:sync": "bd export -o .beads/issues.jsonl",
-    "quality-gate": "npm run typecheck && npm run codegraph:sync && npm run beads:sync"
+    "quality-gate": "npm run typecheck && npm run test:reporting && npm run codegraph:sync && npm run beads:sync"
   },
   "repository": {
     "type": "git",

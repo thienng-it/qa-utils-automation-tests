@@ -11,7 +11,7 @@ plugins: {
     allure: {
         enabled: true,
         require: 'allure-codeceptjs',
-        outputDir: 'output/allure-results',
+        resultsDir: 'allure-results',
     },
     htmlReporter: {
         enabled: true,
@@ -35,5 +35,10 @@ plugins: {
 
 ## Generating Allure Report
 ```bash
-npx allure generate output/allure-results --clean -o output/allure-report
+npx allure generate allure-results --clean -o output/allure-report
 ```
+
+Generate from the exact configured `resultsDir`; `allure-codeceptjs` does not use
+`outputDir`. CI must reject a generated report whose Allure summary has zero tests.
+Add `executor.json`, `environment.properties`, and restored `history/` to
+`allure-results/` before generation when publishing run metadata and trends.
