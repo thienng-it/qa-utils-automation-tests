@@ -41,7 +41,7 @@ jobs:
             sleep 15
           done
 
-      - name: Quality Gate 1: Type Checking
+      - name: "Quality Gate 1: Type Checking"
         run: npm run typecheck
 
       - name: Run E2E Test Battery (Headless)
@@ -60,7 +60,7 @@ jobs:
           echo "{\"passed\": $PASSED, \"failed\": $FAILED, \"skipped\": $SKIPPED, \"total\": $TOTAL}" > output/stats.json
           echo "Stats: $(cat output/stats.json)"
 
-      - name: Tier 1: Generate GitHub Actions Step Summary
+      - name: "Tier 1: Generate GitHub Actions Step Summary"
         run: |
           P=$(grep -oE '"passed": [0-9]+' output/stats.json | grep -oE '[0-9]+')
           F=$(grep -oE '"failed": [0-9]+' output/stats.json | grep -oE '[0-9]+')

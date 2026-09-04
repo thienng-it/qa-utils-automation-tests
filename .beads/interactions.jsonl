@@ -6,3 +6,4 @@
 {"id":"int-d78828dc","kind":"field_change","created_at":"2026-09-04T02:48:30.10681Z","actor":"thienng-it","issue_id":"qa-utils-automation-tests-9x6","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-3717fecb","kind":"field_change","created_at":"2026-09-04T02:48:30.272665Z","actor":"thienng-it","issue_id":"qa-utils-automation-tests-b6g","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-662cfa77","kind":"field_change","created_at":"2026-09-04T02:48:30.445808Z","actor":"thienng-it","issue_id":"qa-utils-automation-tests-zvi","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
+{"id":"int-31de716a","kind":"field_change","created_at":"2026-09-04T03:08:54.14157Z","actor":"thienng-it","issue_id":"qa-utils-automation-tests-3ja","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}
