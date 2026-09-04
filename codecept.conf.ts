@@ -54,6 +54,10 @@ export const config: CodeceptJS.MainConfig = {
         screenshotOnFail: {
             enabled: true,
         },
+        failureArtifacts: {
+            enabled: true,
+            require: './plugins/failureArtifacts.ts',
+        },
     },
     name: 'qa-utils-automation-tests',
 };
