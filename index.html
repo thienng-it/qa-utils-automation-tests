@@ -49,8 +49,9 @@
     }
 
     .container {
-      max-width: 1240px;
+      max-width: 1380px;
       margin: 0 auto;
+      width: 100%;
     }
 
     /* Top Navigation / Brand Header */
@@ -445,10 +446,11 @@
     .chart-legend {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 16px;
       margin-top: 14px;
       font-size: 0.78rem;
       color: var(--text-muted);
+      flex-wrap: wrap;
     }
 
     .legend-item {
@@ -489,7 +491,7 @@
     }
 
     .table-controls-bar {
-      padding: 16px 20px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -554,6 +556,7 @@
 
     /* Table Styling */
     .table-responsive {
+      width: 100%;
       overflow-x: auto;
     }
 
@@ -566,11 +569,11 @@
     th {
       background: #f8fafc;
       color: var(--text-muted);
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      padding: 12px 16px;
+      padding: 10px 8px;
       border-bottom: 1px solid var(--border-subtle);
       white-space: nowrap;
       cursor: pointer;
@@ -583,9 +586,9 @@
     }
 
     td {
-      padding: 12px 16px;
+      padding: 9px 8px;
       border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       white-space: nowrap;
     }
 
@@ -593,14 +596,32 @@
       background: #f8fafc;
     }
 
+    .col-center {
+      text-align: center;
+    }
+
+    th.col-center, td.col-center {
+      text-align: center;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    @media (max-width: 1200px) {
+      body { padding: 16px; }
+      th { padding: 9px 6px; font-size: 0.7rem; }
+      td { padding: 8px 6px; font-size: 0.8rem; }
+      th.col-center, td.col-center { padding-left: 3px; padding-right: 3px; }
+    }
+
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 3px 10px;
+      gap: 5px;
+      padding: 2px 8px;
       border-radius: 9999px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
+      white-space: nowrap;
     }
 
     .status-badge.pass {
@@ -623,16 +644,17 @@
     .progress-bar-cell {
       display: flex;
       align-items: center;
-      gap: 8px;
-      min-width: 110px;
+      gap: 6px;
+      min-width: 80px;
     }
 
     .progress-track {
       flex: 1;
-      height: 6px;
+      height: 5px;
       background: var(--border-subtle);
       border-radius: 9999px;
       overflow: hidden;
+      min-width: 45px;
     }
 
     .progress-fill {
@@ -645,12 +667,13 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 12px;
+      padding: 4px 10px;
       border-radius: var(--radius-sm);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.15s ease;
+      white-space: nowrap;
     }
 
     .action-btn.allure {
@@ -677,7 +700,7 @@
 
     /* Table Pagination */
     .pagination-bar {
-      padding: 14px 20px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -883,19 +906,19 @@
             <tr>
               <th onclick="sortTable(0)">Run</th>
               <th onclick="sortTable(1)">Started</th>
-              <th onclick="sortTable(2)">Execution Status</th>
-              <th onclick="sortTable(3)">Passed</th>
-              <th onclick="sortTable(4)">Failed</th>
-              <th onclick="sortTable(5)">Broken</th>
-              <th onclick="sortTable(6)">Skipped</th>
-              <th onclick="sortTable(7)">Unknown</th>
-              <th onclick="sortTable(8)">Total</th>
+              <th onclick="sortTable(2)">Status</th>
+              <th class="col-center" onclick="sortTable(3)">Passed</th>
+              <th class="col-center" onclick="sortTable(4)">Failed</th>
+              <th class="col-center" onclick="sortTable(5)">Broken</th>
+              <th class="col-center" onclick="sortTable(6)">Skipped</th>
+              <th class="col-center" onclick="sortTable(7)">Unknown</th>
+              <th class="col-center" onclick="sortTable(8)">Total</th>
               <th onclick="sortTable(9)">Pass Rate</th>
-              <th>Detailed Report</th>
+              <th class="col-center">Report</th>
             </tr>
           </thead>
           <tbody id="runs-tbody">
-            <tr><td colspan="10" style="text-align: center; padding: 32px; color: var(--text-muted);">Loading historical records...</td></tr>
+            <tr><td colspan="11" style="text-align: center; padding: 32px; color: var(--text-muted);">Loading historical records...</td></tr>
           </tbody>
         </table>
       </div>
@@ -1004,6 +1027,20 @@
       const remainingSeconds = seconds % 60;
       if (hours) return `${hours}h ${minutes}m ${remainingSeconds}s`;
       return minutes ? `${minutes}m ${remainingSeconds}s` : `${remainingSeconds}s`;
+    }
+
+    function formatStarted(run) {
+      if (run.startedAt) {
+        const d = new Date(run.startedAt);
+        if (!isNaN(d.getTime())) {
+          const pad = (n) => String(n).padStart(2, '0');
+          const datePart = `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+          const timePart = `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} UTC`;
+          return `<div style="line-height:1.2; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;"><div>${datePart}</div><div style="font-size: 0.7rem; color: var(--text-muted);">${timePart}</div></div>`;
+        }
+        return `<span style="font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;">${escapeHtml(run.startedAt)}</span>`;
+      }
+      return `<span style="font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;">${escapeHtml(run.date || 'Unknown')}</span>`;
     }
 
     function escapeHtml(value) {
@@ -1170,14 +1207,24 @@
         const adverse = hasAdverseResult(run);
         const label = resultLabel(run);
         return `<tr>
-          <td style="font-weight: 600; font-family: 'JetBrains Mono', monospace;">${escapeHtml(runLabel(run))}</td>
-          <td>${escapeHtml(run.startedAt || run.date || 'Unknown')}</td>
+          <td style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;">${escapeHtml(runLabel(run))}</td>
+          <td>${formatStarted(run)}</td>
           <td><span class="status-badge ${adverse ? 'fail' : isCleanRun(run) ? 'pass' : 'fail'}">● ${label}</span></td>
-          <td class="num-pass">${count(run, 'passed')}</td><td class="num-fail">${count(run, 'failed')}</td>
-          <td class="num-fail">${count(run, 'broken')}</td><td class="num-skip">${count(run, 'skipped')}</td>
-          <td class="num-total">${count(run, 'unknown')}</td><td class="num-total">${total}</td>
-          <td><div class="progress-bar-cell"><div class="progress-track"><div class="progress-fill" style="width:${rate}%; background:${isCleanRun(run) ? '#10b981' : adverse ? '#ef4444' : '#f59e0b'};"></div></div><span style="font-size:0.78rem;font-weight:700;width:36px;">${rate}%</span></div></td>
-          <td><a class="action-btn ${run.reportPath ? 'allure' : 'legacy'}" href="${escapeHtml(resolveReportUrl(run))}" target="_blank" rel="noopener">Open report →</a></td>
+          <td class="col-center num-pass">${count(run, 'passed')}</td>
+          <td class="col-center num-fail">${count(run, 'failed')}</td>
+          <td class="col-center num-fail">${count(run, 'broken')}</td>
+          <td class="col-center num-skip">${count(run, 'skipped')}</td>
+          <td class="col-center num-total">${count(run, 'unknown')}</td>
+          <td class="col-center num-total">${total}</td>
+          <td>
+            <div class="progress-bar-cell">
+              <div class="progress-track">
+                <div class="progress-fill" style="width:${rate}%; background:${isCleanRun(run) ? '#10b981' : adverse ? '#ef4444' : '#f59e0b'};"></div>
+              </div>
+              <span style="font-size:0.75rem;font-weight:700;width:32px;text-align:right;">${rate}%</span>
+            </div>
+          </td>
+          <td class="col-center"><a class="action-btn ${run.reportPath ? 'allure' : 'legacy'}" href="${escapeHtml(resolveReportUrl(run))}" target="_blank" rel="noopener">Open report →</a></td>
         </tr>`;
       }).join('');
       const endIndex = startIndex + pageItems.length;
