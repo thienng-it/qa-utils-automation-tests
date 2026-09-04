@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "codeceptjs": {
+      "command": "npx",
+      "args": ["codeceptjs-mcp"],
+      "env": {
+        "CODECEPTJS_PROJECT_DIR": ".",
+        "CODECEPTJS_CONFIG": "codecept.conf.ts"
+      }
+    },
+    "codegraph": {
+      "command": "npx",
+      "args": ["@colbymchenry/codegraph", "."]
+    }
+  }
+}

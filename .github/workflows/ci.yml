@@ -1,124 +1,140 @@
-name: E2E Tests
+name: Enterprise E2E Automation Pipeline
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-    schedule:
-        - cron: '0 23 * * *'
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch:
 
-# Grant the workflow permission to write to Github pages
 permissions:
-    contents: write
+  contents: write
+  pages: write
 
-# only one Pages deployment at a time
 concurrency:
-    group: "pages"
-    cancel-in-progress: false
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-    # Job 1: Run tests and generate report
-    e2e-tests:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+  e2e-quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                node-version: '20'
-                cache: 'npm'
-            
-            - name: Install dependencies
-              run: npm ci
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-            - name: Install Playwright browsers
-              run: |
-                for i in 1 2 3; do
-                  sudo apt-get update && npx playwright install chromium --with-deps && break
-                  echo "Attempt $i failed, retrying in 15s..."
-                  sleep 15
-                done
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Run tests (headless)
-              run: |
-                mkdir -p output
-                HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
-              continue-on-error: true
+      - name: Install Playwright browsers
+        run: |
+          for i in 1 2 3; do
+            npx playwright install chromium --with-deps && break
+            echo "Attempt $i failed, retrying..."
+            sleep 15
+          done
 
-            - name: Extract test stats
-              run: |
-                sed 's/\x1b\[[0-9;]*m//g' output/test-output.log > output/test-clean.log
-                cat output/test-clean.log | tail -20
-                PASSED=$(grep -oE '[0-9]+ passed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
-                FAILED=$(grep -oE '[0-9]+ failed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
-                SKIPPED=$(grep -oE '[0-9]+ skipped' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
-                TOTAL=$((PASSED + FAILED + SKIPPED))
-                echo "{\"passed\": $PASSED, \"failed\": $FAILED, \"skipped\": $SKIPPED, \"total\": $TOTAL}" > output/stats.json
-                echo "Stats: $(cat output/stats.json)"
+      - name: Quality Gate 1: Type Checking
+        run: npm run typecheck
 
-            - name: Get today's date
-              id: date
-              run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+      - name: Run E2E Test Battery (Headless)
+        run: |
+          mkdir -p output/allure-results
+          HEADLESS=true npx codeceptjs run --steps 2>&1 | tee output/test-output.log
+        continue-on-error: true
 
-            - name: Checkout existing gh-pages content
-              uses: actions/checkout@v4
-              continue-on-error: true
-              with:
-                ref: gh-pages
-                path: gh-pages-content
+      - name: Process Test Logs & Extract Metrics
+        run: |
+          sed 's/\x1b\[[0-9;]*m//g' output/test-output.log > output/test-clean.log
+          PASSED=$(grep -oE '[0-9]+ passed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
+          FAILED=$(grep -oE '[0-9]+ failed' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
+          SKIPPED=$(grep -oE '[0-9]+ skipped' output/test-clean.log | head -1 | grep -oE '[0-9]+' || echo "0")
+          TOTAL=$((PASSED + FAILED + SKIPPED))
+          echo "{\"passed\": $PASSED, \"failed\": $FAILED, \"skipped\": $SKIPPED, \"total\": $TOTAL}" > output/stats.json
+          echo "Stats: $(cat output/stats.json)"
 
-            - name: Create gh-pages folder if first run
-              run: mkdir -p gh-pages-content/reports
+      - name: Tier 1: Generate GitHub Actions Step Summary
+        run: |
+          P=$(grep -oE '"passed": [0-9]+' output/stats.json | grep -oE '[0-9]+')
+          F=$(grep -oE '"failed": [0-9]+' output/stats.json | grep -oE '[0-9]+')
+          S=$(grep -oE '"skipped": [0-9]+' output/stats.json | grep -oE '[0-9]+')
+          T=$(grep -oE '"total": [0-9]+' output/stats.json | grep -oE '[0-9]+')
+          echo "## 📊 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Tests | **$T** |" >> $GITHUB_STEP_SUMMARY
+          echo "| ✅ Passed | **$P** |" >> $GITHUB_STEP_SUMMARY
+          echo "| ❌ Failed | **$F** |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⚠️ Skipped | **$S** |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "👉 [View Executive Dashboard](https://thienng-it.github.io/qa-utils-automation-tests/)" >> $GITHUB_STEP_SUMMARY
 
-            - name: Copy today's report into dated folder
-              run: |
-                mkdir -p gh-pages-content/reports/${{ steps.date.outputs.date }}
-                if [ -d output/html-report ]; then
-                  cp -r output/html-report/. gh-pages-content/reports/${{ steps.date.outputs.date }}/
-                elif [ -f output/report.html ]; then
-                  cp output/report.html gh-pages-content/reports/${{ steps.date.outputs.date }}/index.html
-                else
-                  echo "No report found — tests may have crashed before reporter ran"
-                fi
-                cp output/stats.json gh-pages-content/reports/${{ steps.date.outputs.date }}/stats.json
+      - name: Generate Allure Report
+        run: |
+          npx allure generate output/allure-results --clean -o output/allure-report || echo "Allure generation skipped"
 
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
 
-            - name: Generate manifest.json
-              run: |
-                echo "[" > gh-pages-content/manifest.json
-                first=true
-                for dir in $(ls -dr gh-pages-content/reports/*/); do
-                  d=$(basename "$dir")
-                  if [ -f "$dir/stats.json" ]; then
-                    if [ "$first" = true ]; then first=false; else echo "," >> gh-pages-content/manifest.json; fi
-                    P=$(grep -oE '"passed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
-                    F=$(grep -oE '"failed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
-                    S=$(grep -oE '"skipped": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
-                    T=$((P + F + S))
-                    echo "{\"date\":\"$d\",\"passed\":$P,\"failed\":$F,\"skipped\":$S,\"total\":$T}" >> gh-pages-content/manifest.json
-                  fi
-                done
-                echo "]" >> gh-pages-content/manifest.json
-                cat gh-pages-content/manifest.json
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-content
 
-            - name: Copy dashboard HTML
-              run: cp dashboard/index.html gh-pages-content/index.html
+      - name: Assemble Reports for GitHub Pages
+        run: |
+          mkdir -p gh-pages-content/reports/${{ steps.date.outputs.date }}/allure
+          if [ -d output/allure-report ]; then
+            cp -r output/allure-report/. gh-pages-content/reports/${{ steps.date.outputs.date }}/allure/
+          fi
+          cp output/stats.json gh-pages-content/reports/${{ steps.date.outputs.date }}/stats.json
 
-            - name: Deploy to GitHub Pages (gh-pages branch)
-              uses: peaceiris/actions-gh-pages@v4
-              with:
-                github_token: ${{ secrets.GITHUB_TOKEN }}
-                publish_dir: gh-pages-content
-                user_name: 'github-actions[bot]'
-                user_email: 'github-actions[bot]@users.noreply.github.com'
+      - name: Generate 30-Day Historical Trend Manifest
+        run: |
+          echo "[" > gh-pages-content/manifest.json
+          first=true
+          for dir in $(ls -dr gh-pages-content/reports/*/ 2>/dev/null); do
+            d=$(basename "$dir")
+            if [ -f "$dir/stats.json" ]; then
+              if [ "$first" = true ]; then first=false; else echo "," >> gh-pages-content/manifest.json; fi
+              P=$(grep -oE '"passed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
+              F=$(grep -oE '"failed": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
+              S=$(grep -oE '"skipped": [0-9]+' "$dir/stats.json" | grep -oE '[0-9]+')
+              T=$((P + F + S))
+              echo "{\"date\":\"$d\",\"passed\":$P,\"failed\":$F,\"skipped\":$S,\"total\":$T}" >> gh-pages-content/manifest.json
+            fi
+          done
+          echo "]" >> gh-pages-content/manifest.json
 
-            - name: Upload failure screenshots
-              if: failure()
-              uses: actions/upload-artifact@v4
-              with:
-                name: failure-screenshots
-                path: output/*.png
-                retention-days: 7
+      - name: Copy Dashboard HTML to Root
+        run: cp dashboard/index.html gh-pages-content/index.html
+
+      - name: Deploy Dashboard & Reports to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages-content
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Upload Failure Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-diagnostics
+          path: |
+            output/*.png
+            output/*.webm
+            output/*.zip
+            output/test-clean.log
+          retention-days: 7

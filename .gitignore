@@ -1,5 +1,8 @@
 node_modules/
 output/
+allure-results/
+*.temp.mjs
+.codegraph/
 
 # Beads / Dolt files (added by bd init)
 .dolt/

@@ -4,30 +4,53 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "test": "npx codeceptjs run --steps",
     "test:headless": "HEADLESS=true npx codeceptjs run --steps",
-    "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2"
+    "test:smoke": "HEADLESS=true npx codeceptjs run --grep '@smoke' --steps",
+    "test:discovery": "HEADLESS=true npx codeceptjs run tests/discovery/all_tools_health_test.ts --steps",
+    "test:regression": "HEADLESS=true npx codeceptjs run --grep '@regression' --steps",
+    "test:a11y": "HEADLESS=true npx codeceptjs run tests/accessibility/a11y_test.ts --steps",
+    "test:performance": "HEADLESS=true npx codeceptjs run tests/performance/cwv_test.ts --steps",
+    "test:stress": "HEADLESS=true npx codeceptjs run tests/stress/stress_test.ts --steps",
+    "test:all": "HEADLESS=true npx codeceptjs run --steps",
+    "test:parallel": "HEADLESS=true npx codeceptjs run-workers 2",
+    "report:allure": "npx allure generate allure-results --clean -o output/allure-report"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thienng-it/qa-utils-automation-tests.git"
   },
-  "keywords": [],
+  "keywords": [
+    "codeceptjs",
+    "playwright",
+    "automation",
+    "qa",
+    "allure",
+    "ai-native",
+    "data-driven"
+  ],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/thienng-it/qa-utils-automation-tests/issues"
   },
   "homepage": "https://github.com/thienng-it/qa-utils-automation-tests#readme",
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@codeceptjs/configure": "^1.0.3",
+    "@colbymchenry/codegraph": "^1.6.0",
     "@types/node": "^25.6.0",
-    "codeceptjs": "^3.7.9",
+    "allure-codeceptjs": "^3.4.4",
+    "allure-commandline": "^2.32.2",
+    "codeceptjs": "^4.1.0",
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^5.1.1",
     "mochawesome-report-generator": "^6.3.2",
     "playwright": "^1.59.1",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23.13",
     "typescript": "^6.0.3"
   }
 }

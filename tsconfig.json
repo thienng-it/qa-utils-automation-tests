@@ -1,20 +1,20 @@
 {
-  "ts-node": {
-    "files": true
-  },
   "compilerOptions": {
-    "target": "es2018",
-    "lib": ["es2018", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "lib": ["ESNext", "DOM"],
     "esModuleInterop": true,
-    "module": "commonjs",
     "strict": true,
     "noImplicitAny": true,
     "noUnusedLocals": false,
     "strictNullChecks": true,
     "types": ["codeceptjs", "node"],
-    "declaration": true,
     "skipLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "output"]
 }

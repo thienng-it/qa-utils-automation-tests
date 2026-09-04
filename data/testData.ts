@@ -1,12 +1,9 @@
-// ROUTES - hash-based routing of the QA Utils
-export const ROUTES = {
-    home: "#/",
-    uuid: "#/uuid",
-    base64: "#/base64",
-    explore: "#/explore",
+// Target application constants & shared test fixtures
+export const EXPECTED = {
+    brandText: 'KobeanQAUtils',
+    searchPlaceholder: 'Search tools',
 } as const;
 
-// Navigation group names
 export const NAV_GROUPS = [
     "Converters",
     "Generators",
@@ -16,14 +13,8 @@ export const NAV_GROUPS = [
     "Palace",
 ] as const;
 
-// Expected text
-export const EXPECTED = {
-    brandText: 'QA Utils',
-    searchPlaceholder: 'Search tools',
-} as const;
-
-// Fixtures
-export const BASE64_FIXTURES = {
-    plainText: 'Hello, QA World!',
-    encoded: 'SGVsbG8sIFFBIEdsb3ZlIQ==',
-} as const;
+export const THEMES = [
+    'dark',
+    'light',
+    'dim',
+] as const;

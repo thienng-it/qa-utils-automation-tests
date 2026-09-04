@@ -1,74 +1,49 @@
-const { I } = inject();
+import { BasePage } from './base/BasePage';
 
-class HomePage {
-    // URL
-    readonly url = '#/';
-    
-    // Selectors
+class HomePage extends BasePage {
+    constructor() {
+        super('#/');
+    }
+
     readonly selectors = {
-        brand: '[data-testid="logo"]',
+        brand: 'a[data-testid="logo"]',
+        brandLogo: 'a[data-testid="logo"] img[alt="KobeanQAUtils"]',
         searchInput: '#navbar-search',
-        homeLink: '[aria-label="Go to home page"]',
-        themeToggle: '[aria-label^="Theme:"]', // starts-with match (label changes per theme)
-        exploreTools: '[aria-label="Explore tools"]',
-        exploreToolsTitle: '.explore-title',
-        quoteButton: '[aria-label="Get another random quote"]',
-        homeCardQuoteText: '.home-card-quote-text',
-        homeCardQuoteAuthor: '.home-card-quote-author',
+        exploreToolsBtn: 'a.home-btn-primary',
+        quoteCard: '.home-card.home-card-quote',
+        quoteShuffleBtn: 'button.home-card-shuffle',
     };
 
-    // Actions
-    open(): void {
-        I.amOnPage(this.url);
+    waitForPageLoaded(): void {
+        this.I.waitForElement(this.selectors.brand, 10);
+        this.I.seeElement(this.selectors.brandLogo);
     }
 
     seeBrandIsVisible(): void {
-        I.seeElement(this.selectors.brand);
-        I.see(this.selectors.brand);
+        this.I.waitForElement(this.selectors.brand, 10);
+        this.I.seeElement(this.selectors.brandLogo);
     }
 
-    searchForTool(toolName: string): void {
-        I.fillField(this.selectors.searchInput, toolName);
+    clickExploreTools(): void {
+        this.I.waitForElement(this.selectors.exploreToolsBtn, 5);
+        this.I.click(this.selectors.exploreToolsBtn);
+        this.waitForRoute('#/explore');
     }
 
-    clearSearch(): void {
-        I.clearField(this.selectors.searchInput);
+    shuffleQuote(): void {
+        this.I.waitForElement(this.selectors.quoteShuffleBtn, 5);
+        this.I.click(this.selectors.quoteShuffleBtn);
     }
 
-    seeSearchResult(expectedText: string): void {
-        I.see(expectedText);
-    }
-
-    clickHomeLink(): void {
-        I.click(this.selectors.homeLink);
-    }
-
-    toggleTheme(): void {
-        I.click(this.selectors.themeToggle);
-    }
-
-    clickExploreTools(exploreToolsName: string): void {
-        I.click(this.selectors.exploreTools);
-    }
-
-    seeExploreToolsTitle(title: string): void {
-        I.see(title);
-        I.seeElement(this.selectors.exploreToolsTitle);
-    }
-
-    clickQuoteButton(): void {
-        I.click(this.selectors.quoteButton);
-    }
-
-    seeQuoteButtonIsClickable(): void {
-        I.seeElement(this.selectors.quoteButton);
+    async grabQuoteText(): Promise<string> {
+        this.I.waitForElement(this.selectors.quoteCard, 5);
+        return await this.I.grabTextFrom(this.selectors.quoteCard);
     }
 
     seeHomeCardQuote(): void {
-        I.seeElement(this.selectors.homeCardQuoteText);
-        I.seeElement(this.selectors.homeCardQuoteAuthor);
+        this.I.waitForElement(this.selectors.quoteCard, 5);
+        this.I.seeElement(this.selectors.quoteCard);
     }
 }
 
-// Export an HomePage instance
-export = new HomePage();
+export default new HomePage();

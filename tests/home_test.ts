@@ -1,56 +1,43 @@
-import { EXPECTED, NAV_GROUPS } from '../data/testData';
+import { EXPECTED, NAV_GROUPS } from '../data/testData.ts';
 
-Feature('Home Page');
+Feature('Home Page & Core Navigation');
 
-// Before each test
-Before(({ homePage }) => {
+Before(({ I, homePage }) => {
     homePage.open();
 });
 
-// Scenario 1: Brand and Identity
-Scenario('Should display the QA Utils brand', ({ I, homePage }) => {
-    I.seeElement(homePage.selectors.brand);
-    I.see(EXPECTED.brandText);
+Scenario('Should display the KobeanQAUtils brand', ({ I, homePage }) => {
+    homePage.seeBrandIsVisible();
 }).tag('@smoke');
 
-
-// Scenario 2: Search
-Scenario('Should search for a tool and see results', ({ I, homePage}) => {
-    homePage.searchForTool('UUID');
-    homePage.seeSearchResult('UUID Generator');
-    homePage.clearSearch();
+Scenario('Should search for a tool via navbar and navigate', ({ navBar }) => {
+    navBar.searchFor('UUID');
+    navBar.selectSearchResult('UUID Generator');
+    navBar.clearSearch();
 }).tag('@smoke');
 
-// Scenario 3: Navigation dropdown groups exist
-Scenario('Should display all navigation groups', ({ I}) => {
-    // Verify each nav group dropdown button is present
+Scenario('Should display all navigation groups', ({ I }) => {
     NAV_GROUPS.forEach((group) => {
         I.see(group);
     });
 }).tag('@regression');
 
-// Scenario 4: Theme toggle works
-Scenario('Should toggle the theme without errors', ({ I, homePage }) => {
-    homePage.toggleTheme();
-    // After clicking, the theme attribute on <html> changes
-    I.seeElement(homePage.selectors.themeToggle);
+Scenario('Should toggle the theme without errors', ({ navBar }) => {
+    navBar.toggleTheme();
 }).tag('@regression');
 
-// Scenario 5: Navigate to home from any page
-Scenario('Should navigate back to home via home link', ({ I, homePage}) => {
-    I.navigateTo('#/uuid');
-    homePage.clickHomeLink();
-    I.seeElement(homePage.selectors.brand);
+Scenario('Should navigate back to home via navbar brand/home link', ({ I, navBar, homePage }) => {
+    I.amOnPage('#/uuid');
+    navBar.clickHome();
+    homePage.seeBrandIsVisible();
 }).tag('@regression');
 
-// Scenario 6: Click on "Explore Tools" button
-Scenario('Should click on "Explore Tools" button and navigate to tools page', ({ I, homePage }) => {
-    homePage.clickExploreTools('Explore Tools');
-    homePage.seeExploreToolsTitle('Explore Tools');
+Scenario('Should click on "Explore Tools" button and navigate to explore catalog', ({ homePage, explorePage }) => {
+    homePage.clickExploreTools();
+    explorePage.waitForPageLoaded();
 }).tag('@regression');
 
-// Scenario 7: Click on Quote button
-Scenario('Should click on Quote button and see quote text', ({ I, homePage}) => {
-    homePage.clickQuoteButton();
+Scenario('Should shuffle quote and display quote content', ({ homePage }) => {
+    homePage.shuffleQuote();
     homePage.seeHomeCardQuote();
 }).tag('@regression');
