@@ -946,15 +946,26 @@
     async function loadDashboard() {
       try {
         const res = await fetch('manifest.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         rawData = await res.json();
       } catch (err) {
-        console.warn('Could not load manifest.json, using fallback sample data for preview.');
-        rawData = [
-          { date: '2026-09-04', passed: 114, failed: 0, skipped: 0, total: 114 },
-          { date: '2026-09-03', passed: 0, failed: 7, skipped: 0, total: 7 },
-          { date: '2026-09-02', passed: 0, failed: 7, skipped: 0, total: 7 },
-          { date: '2026-09-01', passed: 0, failed: 7, skipped: 0, total: 7 }
-        ];
+        console.warn('Could not load local manifest.json, attempting fetch from live GitHub Pages...');
+        try {
+          const remoteRes = await fetch('https://thienng-it.github.io/qa-utils-automation-tests/manifest.json');
+          if (remoteRes.ok) {
+            rawData = await remoteRes.json();
+          } else {
+            throw new Error('Remote manifest unreachable');
+          }
+        } catch (remoteErr) {
+          console.warn('Using fallback baseline data.');
+          rawData = [
+            { date: '2026-09-04', passed: 114, failed: 0, skipped: 0, total: 114 },
+            { date: '2026-09-03', passed: 0, failed: 7, skipped: 0, total: 7 },
+            { date: '2026-09-02', passed: 0, failed: 7, skipped: 0, total: 7 },
+            { date: '2026-09-01', passed: 0, failed: 7, skipped: 0, total: 7 }
+          ];
+        }
       }
 
       if (!rawData || !rawData.length) {
@@ -969,6 +980,23 @@
       updateFilterCounts();
       applyFilters();
       renderTrendChart();
+    }
+
+    function resolveReportUrl(date, isModern) {
+      const subpath = isModern ? `reports/${date}/allure/index.html` : `reports/${date}/index.html`;
+      
+      // When accessed from localhost (e.g. localhost:8080 or 127.0.0.1) or file://, always target the live GitHub Pages hosted report
+      const isLocal = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1' || 
+                      window.location.protocol === 'file:';
+      if (isLocal) {
+        return `https://thienng-it.github.io/qa-utils-automation-tests/${subpath}`;
+      }
+      
+      // On GitHub Pages, ensure proper absolute path resolution
+      const path = window.location.pathname;
+      const baseDir = path.endsWith('/') ? path : path.substring(0, path.lastIndexOf('/') + 1);
+      return `${window.location.origin}${baseDir}${subpath}`;
     }
 
     function renderHeroMetrics() {
@@ -1013,7 +1041,7 @@
       // Latest Report Button
       const btnContainer = document.getElementById('latest-report-btn-container');
       const isModern = latest.total > 10;
-      const reportUrl = isModern ? `reports/${latest.date}/allure/index.html` : `reports/${latest.date}/index.html`;
+      const reportUrl = resolveReportUrl(latest.date, isModern);
       btnContainer.innerHTML = `
         <a class="action-btn allure" style="padding: 8px 18px; font-size: 0.85rem;" href="${reportUrl}" target="_blank" rel="noopener">
           📊 Open Latest Allure 3 Report &rarr;
@@ -1122,7 +1150,7 @@
           ? `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; background: #e0e7ff; color: #4338ca; font-size: 0.72rem; font-weight: 600;">Enterprise V4</span>`
           : `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; background: #f1f5f9; color: #64748b; font-size: 0.72rem; font-weight: 600;">Legacy V3</span>`;
 
-        const reportUrl = isModern ? `reports/${r.date}/allure/index.html` : `reports/${r.date}/index.html`;
+        const reportUrl = resolveReportUrl(r.date, isModern);
         const actionBtn = isModern
           ? `<a class="action-btn allure" href="${reportUrl}" target="_blank" rel="noopener">Allure 3 &rarr;</a>`
           : `<a class="action-btn legacy" href="${reportUrl}" target="_blank" rel="noopener">Legacy HTML</a>`;
