@@ -1,10 +1,29 @@
 import AxeBuilder from '@axe-core/playwright';
 
+/**
+ * ============================================================================
+ * Feature: Automated Web Accessibility (A11y) Auditing - WCAG 2.1 AA
+ * ============================================================================
+ * 
+ * Target Application: KobeanQAUtils (https://kobenguyent.github.io/kobeanqautils/)
+ * 
+ * Objectives & Compliance Standards:
+ * - Scans key customer-facing portals using the industry-standard Deque `AxeBuilder`.
+ * - Validates compliance against WCAG 2.0 and WCAG 2.1 Level A and Level AA guidelines.
+ * - Checks color contrast ratios, ARIA label semantics, form control labels, and DOM structure.
+ * 
+ * Test Tickets:
+ * - [QA-TC-20260904-025] Automated WCAG 2.1 AA Accessibility Audit
+ */
 Feature('Accessibility (a11y) Audits - WCAG 2.1 AA');
 
 const CORE_ROUTES = ['#/', '#/explore', '#/uuid', '#/base64'];
 
 for (const route of CORE_ROUTES) {
+    /**
+     * Automated WCAG 2.1 AA Accessibility Scan
+     * Uses Playwright helper bridge to execute @axe-core/playwright on live DOM.
+     */
     Scenario(`Audit ${route} for WCAG 2.1 AA compliance`, async ({ I }) => {
         I.amOnPage(route);
         I.waitForElement('body', 10);

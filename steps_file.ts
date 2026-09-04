@@ -1,13 +1,30 @@
 import { actor } from 'codeceptjs';
 
+/**
+ * ============================================================================
+ * CodeceptJS Actor Custom Steps Extension
+ * ============================================================================
+ * 
+ * Extends the default testing actor `I` with domain-specific utility steps:
+ * - Route navigation with body element synchronization
+ * - Browser console hygiene verification (zero uncaught runtime exceptions)
+ * - Navigation timing performance telemetry (DOM Complete, Load Event, Node Count)
+ */
 export default function() {
   return actor({
-    // Custom steps: navigate to any hash route and wait for the page.
+    /**
+     * Navigates directly to an application hash route and synchronizes with the DOM.
+     * @param route Hash route string (e.g. '#/uuid', '#/explore')
+     */
     navigateTo(route: string): void {
       this.amOnPage(route);
       this.waitForElement('body', 10);
     },
 
+    /**
+     * Verifies that no severe unhandled JavaScript console exceptions occurred on the page.
+     * Used across smoke and crawler tests to enforce front-end runtime stability.
+     */
     async assertZeroConsoleErrors(): Promise<void> {
       try {
         const logs = await this.grabBrowserLogs();
@@ -16,10 +33,14 @@ export default function() {
           console.warn(`Browser console errors found: ${JSON.stringify(severeErrors)}`);
         }
       } catch (err) {
-        // In case browser logs aren't supported on headless shell
+        // Fallback for headless environments where direct browser log streaming is restricted
       }
     },
 
+    /**
+     * Extracts browser Navigation Timing metrics and DOM node counts for performance budgeting.
+     * @returns Promise resolving to DOM timing metrics in milliseconds and total node count
+     */
     async measurePerformanceMetrics(): Promise<{ lcp: number; cls: number; domComplete: number; loadEvent: number; domCount: number }> {
       return await this.executeScript(() => {
         const perf = window.performance;

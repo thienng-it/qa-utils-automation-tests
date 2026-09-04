@@ -1,18 +1,28 @@
+import { envConfig } from './config/env.config.ts';
+
+/**
+ * ============================================================================
+ * CodeceptJS Master Configuration
+ * ============================================================================
+ * 
+ * Powered by Playwright and TypeScript ESM.
+ * Environment and locator settings are decoupled into ./config/ for clean reuse.
+ */
 export const config: CodeceptJS.MainConfig = {
     tests: './tests/**/*_test.ts',
     require: ['tsx/esm'],
     output: './output',
     helpers: {
         Playwright: {
-            browser: 'chromium',
-            url: 'https://kobenguyent.github.io/kobeanqautils/',
-            show: !process.env.HEADLESS,
+            browser: envConfig.browser,
+            url: envConfig.baseUrl,
+            show: !envConfig.isHeadless,
             waitForNavigation: 'load',
-            video: true,
-            trace: true,
-            timeout: 30000,
+            video: envConfig.artifacts.recordVideo,
+            trace: envConfig.artifacts.recordTrace,
+            timeout: envConfig.timeoutMs,
             restart: 'keep',
-            windowSize: '1440x900',
+            windowSize: `${envConfig.windowSize.width}x${envConfig.windowSize.height}`,
         },
     },
     include: {

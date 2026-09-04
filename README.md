@@ -20,6 +20,9 @@ qa-utils-automation-tests/
 │   ├── rules/               # Rule engine triggering CodeceptJS skills dynamically
 │   └── skills/              # Official CodeceptJS skills (Core, POM, Data-Driven, Best Practices, A11y)
 ├── .cursor/                 # Cursor AI IDE MCP definitions
+├── config/                  # Environment & Locators Configuration
+│   ├── env.config.ts        # Multi-environment targets (local, staging, prod), timeouts, slow-mo
+│   └── locators.config.ts   # Centralized reusable locator repository (Navbar, Forms, Buttons, Toasts)
 ├── plans/                   # In-Repo JIRA/Zephyr Test Management System
 │   ├── epics/               # Standardized Epics (QA-EPIC-YYYYMMDD-SEQ-slug.md)
 │   ├── test-plans/          # Test Plans linking Epics to Scenarios (QA-PLAN-YYYYMMDD-SEQ-slug.md)
