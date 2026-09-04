@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "qa_utils_automation_tests",
+  "project_id": "266b5ac8-c5e2-4b4f-a3a8-dbb8062f64e0"
+}
