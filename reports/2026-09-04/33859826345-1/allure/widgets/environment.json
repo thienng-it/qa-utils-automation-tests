@@ -1,0 +1,1 @@
+[{"values":["https://kobenguyent.github.io/kobeanqautils/"],"name":"Target_URL"},{"values":["Chromium"],"name":"Browser"},{"values":["Linux"],"name":"Runner_OS"},{"values":["v20.20.2"],"name":"Node"},{"values":["33771fe268d2f431bae694f63dd39d479735e83e"],"name":"Commit"},{"values":["main"],"name":"Branch"},{"values":["push"],"name":"Trigger"}]

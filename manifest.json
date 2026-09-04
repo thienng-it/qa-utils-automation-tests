@@ -1,235 +1,842 @@
 [
-{"date":"2026-09-04","passed":114,"failed":0,"skipped":0,"total":114}
-,
-{"date":"2026-09-03","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-09-02","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-09-01","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-31","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-30","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-29","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-28","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-27","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-25","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-24","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-23","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-22","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-21","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-20","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-19","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-18","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-17","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-16","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-15","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-14","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-13","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-12","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-11","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-10","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-09","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-08","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-07","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-06","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-05","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-04","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-02","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-08-01","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-31","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-30","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-28","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-27","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-26","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-25","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-24","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-23","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-21","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-20","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-18","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-17","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-15","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-14","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-13","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-12","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-11","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-10","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-09","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-07","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-06","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-05","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-04","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-03","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-02","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-07-01","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-30","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-29","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-28","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-27","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-26","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-25","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-23","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-22","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-21","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-20","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-19","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-18","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-17","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-16","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-15","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-14","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-13","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-12","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-11","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-10","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-09","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-08","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-07","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-06","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-05","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-04","passed":0,"failed":7,"skipped":0,"total":7}
-,
-{"date":"2026-06-03","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-06-02","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-06-01","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-05-31","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-05-30","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-05-29","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-05-28","passed":6,"failed":1,"skipped":0,"total":7}
-,
-{"date":"2026-05-27","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-26","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-25","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-24","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-23","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-22","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-21","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-20","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-19","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-17","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-16","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-15","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-14","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-13","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-12","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-10","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-09","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-08","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-07","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-06","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-05","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-04","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-03","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-02","passed":7,"failed":0,"skipped":0,"total":7}
-,
-{"date":"2026-05-01","passed":0,"failed":0,"skipped":0,"total":0}
+  {
+    "schemaVersion": 1,
+    "runId": "33859826345",
+    "runNumber": 152,
+    "runAttempt": 1,
+    "date": "2026-09-04",
+    "startedAt": "2026-09-04T09:45:25.904Z",
+    "completedAt": "2026-09-04T09:46:42.541Z",
+    "durationMs": 76637,
+    "status": "passed",
+    "passed": 114,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "unknown": 0,
+    "total": 114,
+    "retries": 0,
+    "commit": "33771fe268d2f431bae694f63dd39d479735e83e",
+    "branch": "main",
+    "event": "push",
+    "workflow": "Enterprise E2E Automation Pipeline",
+    "workflowUrl": "https://github.com/thienng-it/qa-utils-automation-tests/actions/runs/33859826345/attempts/1",
+    "commitUrl": "https://github.com/thienng-it/qa-utils-automation-tests/commit/33771fe268d2f431bae694f63dd39d479735e83e",
+    "reportPath": "reports/2026-09-04/33859826345-1/allure/index.html",
+    "targetUrl": "https://kobenguyent.github.io/kobeanqautils/",
+    "browser": "Chromium",
+    "runner": "Linux"
+  },
+  {
+    "date": "2026-09-03",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-09-02",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-09-01",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-31",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-30",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-29",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-28",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-27",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-25",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-24",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-23",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-22",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-21",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-20",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-19",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-18",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-17",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-16",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-15",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-14",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-13",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-12",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-11",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-10",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-09",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-08",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-07",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-06",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-05",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-04",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-02",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-08-01",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-31",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-30",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-28",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-27",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-26",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-25",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-24",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-23",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-21",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-20",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-18",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-17",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-15",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-14",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-13",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-12",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-11",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-10",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-09",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-07",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-06",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-05",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-04",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-03",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-02",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-07-01",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-30",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-29",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-28",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-27",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-26",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-25",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-23",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-22",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-21",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-20",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-19",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-18",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-17",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-16",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-15",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-14",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-13",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-12",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-11",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-10",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-09",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-08",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-07",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-06",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-05",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-04",
+    "passed": 0,
+    "failed": 7,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-03",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-02",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-06-01",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-31",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-30",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-29",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-28",
+    "passed": 6,
+    "failed": 1,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-27",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-26",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-25",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-24",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-23",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-22",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-21",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-20",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-19",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-17",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-16",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-15",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-14",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-13",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-12",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-10",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-09",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-08",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-07",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-06",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-05",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-04",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-03",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-02",
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "total": 7
+  },
+  {
+    "date": "2026-05-01",
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "total": 0
+  }
 ]
